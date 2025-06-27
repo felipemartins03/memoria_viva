@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memória Viva - Repositório de Projetos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #2c3e50; background-color: #f8fafc; overflow-x: hidden; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        header { background: #003366; color: white; padding: 1.5rem 0; box-shadow: 0 4px 20px rgba(0,51,102,0.15); position: sticky; top: 0; z-index: 1000; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo { font-size: 2rem; font-weight: 700; display: flex; align-items: center; gap: 0.8rem; }
+        .logo i { font-size: 1.8rem; }
+        nav ul { list-style: none; display: flex; gap: 2.5rem; }
+        nav a { color: white; text-decoration: none; transition: all 0.3s ease; cursor: pointer; font-weight: 500; padding: 0.5rem 1rem; border-radius: 8px; position: relative; }
+        nav a:hover { background-color: rgba(255,255,255,0.1); }
+        nav a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 50%; background-color: #FF6600; transition: all 0.3s ease; transform: translateX(-50%); }
+        nav a:hover::after { width: 80%; }
+        #home { padding-top: 2rem; padding-bottom: 2rem; }
+        .hero-banner { background-color: #002244; color: white; padding: 6rem 3rem; text-align: center; position: relative; overflow: hidden; border-radius: 24px; }
+        .hero-banner::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800"><g fill-opacity="0.1"><circle fill="%23FF6600" cx="100" cy="100" r="150" /><circle fill="%23FFFFFF" cx="700" cy="600" r="100" /><rect fill="%23FF6600" x="300" y="200" width="200" height="200" transform="rotate(45 400 300)" /><path fill="%23FFFFFF" d="M 500 500 L 550 550 L 500 600 Z" /></g></svg>'); animation: rotateBackground 60s linear infinite; z-index: 0; }
+        @keyframes rotateBackground { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .hero-content { position: relative; z-index: 1; }
+        .hero-banner h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 1rem; }
+        .hero-banner p { font-size: 1.2rem; max-width: 600px; margin: 0 auto 2.5rem auto; opacity: 0.9; }
+        .hero-banner .btn-primary { background-color: #FF6600; border: 2px solid #FF6600; color: white; }
+        .hero-banner .btn-primary:hover { background-color: #E55A00; border-color: #E55A00; }
+        .hero-banner .btn-secondary { background-color: transparent; border: 2px solid white; color: white; }
+        .hero-banner .btn-secondary:hover { background-color: white; color: #002244; }
+        .btn { padding: 14px 28px; border-radius: 12px; cursor: pointer; font-size: 1rem; font-weight: 600; transition: all 0.3s ease; text-decoration: none; display: inline-block; border: none;}
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .section { padding: 4rem 0; display: none; }
+        .section.active { display: block; }
+        #home.section.active { padding: 0; padding-top: 2rem; padding-bottom: 2rem; }
+        .section h2 { color: #003366; margin-bottom: 3rem; text-align: center; font-size: 2.8rem; font-weight: 700; }
+        .form-container, .filters-container, .project-card { background: white; border-radius: 16px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08); }
+        .form-container { padding: 3rem; max-width: 700px; margin: 0 auto; }
+        .form-group { margin-bottom: 2rem; }
+        .form-group label { display: block; margin-bottom: 0.8rem; color: #2c3e50; font-weight: 600; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 16px 20px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 1rem; transition: all 0.3s ease; background-color: #f8fafc; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #FF6600; background-color: white; box-shadow: 0 0 0 3px rgba(255,102,0,0.1); }
+        .integrantes-list { display: flex; flex-direction: column; gap: 1rem; }
+        .integrante-item { display: flex; align-items: center; gap: 1rem; }
+        .integrante-item input { flex-grow: 1; }
+        .btn-remove-integrante { background: #ef4444; color: white; border: none; border-radius: 8px; width: 40px; height: 40px; cursor: pointer; font-weight: bold; }
+        .btn-add-integrante { background: #22c55e; color: white; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; margin-top: 10px; font-weight: 500; }
+        .filters-container { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 1.5rem; align-items: end; margin-bottom: 2.5rem; padding: 2rem; }
+        .filter-item label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: #334155; font-size: 0.9rem; }
+        .filter-item input, .filter-item select { width: 100%; padding: 14px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1rem; }
+        .btn-accent { background-color: #FF6600; color: white; border: none;}
+        .btn-accent:hover { background-color: #E55A00; }
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 2rem; }
+        .project-card { padding: 2rem; transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; }
+        .project-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .project-card h3 { color: #003366; margin-bottom: 1rem; }
+        .project-meta { display: flex; gap: 0.75rem; margin-bottom: 1rem; flex-wrap: wrap; }
+        .project-tag { background: #FF6600; color: white; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+        .project-details p { margin-bottom: 0.75rem; color: #475569; }
+        .project-details strong { color: #1e293b; }
+        .project-card footer { margin-top: auto; padding-top: 1rem; border-top: 1px solid #e2e8f0; font-size: 0.85rem; color: #64748b; }
+        .empty-state { text-align: center; padding: 3rem; color: #666; grid-column: 1 / -1; }
+        .success-message { background: #10b981; color: white; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; display: none; }
+    </style>
+</head>
+<body>
+    <script>
+        const SUPABASE_URL = 'https://fiaebgwsmijwpjpyhdba.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpYWViZ3dzbWlqd3BqcHloZGJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5ODYxMzIsImV4cCI6MjA2NjU2MjEzMn0.dZbXp9_Gf6rRJLGoxTxx2r0mfTBMDCipyf7k2E0zNag';
+
+        // A variável global 'supabase' vem do script da CDN.
+        // Criamos nosso cliente específico com um novo nome, como 'supabaseClient'.
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    </script>
+    
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo"><i class="fas fa-book-open"></i> Memória Viva</div>
+                <nav>
+                    <ul>
+                        <li><a onclick="showSection('home')">Início</a></li>
+                        <li><a onclick="showSection('cadastro')">Cadastrar Projeto</a></li>
+                        <li><a onclick="showSection('projetos')">Consultar Projetos</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="section active">
+            <div class="container">
+                <div class="hero-banner">
+                    <div class="hero-content">
+                        <h1>Um Legado de Conhecimento</h1>
+                        <p>A plataforma para arquivar, descobrir e celebrar os projetos de conclusão que marcaram gerações de estudantes.</p>
+                        <div>
+                            <a href="#" class="btn btn-primary" onclick="showSection('cadastro')">Enviar meu Projeto</a>
+                            <a href="#" class="btn btn-secondary" onclick="showSection('projetos')" style="margin-left: 1rem;">Explorar Acervo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cadastro" class="section">
+            <div class="container">
+                <h2>Cadastrar Novo Projeto</h2>
+                <div class="form-container">
+                    <div class="success-message" id="successMessage">Projeto cadastrado com sucesso!</div>
+                    <form id="projectForm">
+                        <div class="form-group"><label>Integrantes do Grupo *</label><div id="integrantesContainer" class="integrantes-list"><div class="integrante-item"><input type="text" name="integrantes[]" placeholder="Nome completo do integrante" required></div></div><button type="button" class="btn-add-integrante" onclick="addIntegrante()">+ Adicionar Integrante</button></div>
+                        <div class="form-group"><label for="nomeProjeto">Nome do Projeto *</label><input type="text" id="nomeProjeto" name="nomeProjeto" required></div>
+                        <div class="form-group"><label for="turma">Nome da Turma *</label><input type="text" id="turma" name="turma" placeholder="Ex: Aprendizagem 187" required></div>
+                        <div class="form-group"><label for="docente">Nome do Docente *</label><input type="text" id="docente" name="docente" required></div>
+                        <div class="form-group"><label for="ano">Ano de Realização *</label><select id="ano" name="ano" required><option value="">Selecione o ano</option></select></div>
+                        <div class="form-group"><label for="descricao">Descrição do Projeto *</label><textarea id="descricao" name="descricao" placeholder="Descreva o objetivo, metodologia e principais resultados do seu projeto..." required></textarea></div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Cadastrar Projeto</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section id="projetos" class="section">
+            <div class="container">
+                <h2>Projetos Cadastrados</h2>
+                <div class="filters-container">
+                    <div class="filter-item"><label for="filterKeyword">Buscar por Palavra-Chave:</label><input type="text" id="filterKeyword" placeholder="Nome do projeto, descrição..."></div>
+                    <div class="filter-item"><label for="filterTurma">Buscar por Turma:</label><input type="text" id="filterTurma" placeholder="Ex: Aprendizagem 187"></div>
+                    <div class="filter-item"><label for="filterAno">Filtrar por Ano:</label><select id="filterAno"><option value="">Todos os anos</option></select></div>
+                    <div class="filter-item"><button class="btn btn-accent" onclick="applyFilters()">Buscar</button><button class="btn" onclick="clearFilters()" style="background: transparent; border: 1px solid #ccc; color: #333; margin-left: 5px;">Limpar</button></div>
+                </div>
+                <div id="projectsContainer" class="projects-grid"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer style="background: #003366; color: white; text-align: center; padding: 2rem 0; margin-top: 3rem;">
+        <div class="container">
+            <p>&copy; 2025 Memória Viva. Preservando conhecimento, inspirando futuro.</p>
+        </div>
+    </footer>
+
+    <script>
+        let projects = [];
+
+        async function fetchAndDisplayProjects() {
+    const { data, error } = await supabaseClient
+        .from('db_memoria_viva')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+    // ADICIONE ESTA LINHA PARA ESPIONAR OS DADOS
+    console.log('Dados recebidos do Supabase:', data);
+
+    if (error) {
+        console.error('Erro ao buscar projetos:', error);
+    } else {
+        projects = data;
+        displayProjects();
+        populateFilterYears();
+    }
+}
+
+        document.getElementById('projectForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const form = e.target;
+            const submitButton = form.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            submitButton.textContent = 'Enviando...';
+
+            const integrantes = Array.from(document.querySelectorAll('input[name="integrantes[]"]')).map(input => input.value.trim()).filter(Boolean);
+            if (integrantes.length === 0) { 
+                alert('Adicione pelo menos um integrante.'); 
+                submitButton.disabled = false;
+                submitButton.textContent = 'Cadastrar Projeto';
+                return; 
+            }
+
+            const formData = new FormData(form);
+            const projectData = { 
+                integrantes: integrantes, 
+                nome_projeto: formData.get('nomeProjeto'),
+                turma: formData.get('turma'), 
+                docente: formData.get('docente'), 
+                ano: formData.get('ano'), 
+                descricao: formData.get('descricao')
+            };
+            
+            // Usa a variável 'supabaseClient' que foi criada corretamente
+            const { data, error } = await supabaseClient
+                .from('db_memoria_viva')
+                .insert([projectData]);
+
+            if (error) {
+                console.error('Erro ao cadastrar projeto:', error);
+                alert('Ocorreu um erro ao cadastrar. Tente novamente.');
+                submitButton.disabled = false;
+                submitButton.textContent = 'Cadastrar Projeto';
+            } else {
+                const successMessage = document.getElementById('successMessage');
+                successMessage.style.display = 'block';
+                setTimeout(() => successMessage.style.display = 'none', 4000);
+                
+                form.reset();
+                document.getElementById('integrantesContainer').innerHTML = `<div class="integrante-item"><input type="text" name="integrantes[]" placeholder="Nome completo do integrante" required></div>`;
+                submitButton.disabled = false;
+                submitButton.textContent = 'Cadastrar Projeto';
+
+                await fetchAndDisplayProjects(); 
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            populateYearOptions();
+            fetchAndDisplayProjects(); 
+        });
+        
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            window.scrollTo(0, 0);
+            if (sectionId === 'projetos') {
+                applyFilters();
+            }
+        }
+
+        function populateYearOptions() {
+            const currentYear = new Date().getFullYear();
+            const yearSelect = document.getElementById('ano');
+            for (let year = currentYear; year >= 2020; year--) {
+                yearSelect.innerHTML += `<option value="${year}">${year}</option>`;
+            }
+        }
+
+        function addIntegrante() {
+            const container = document.getElementById('integrantesContainer');
+            const newIntegrante = document.createElement('div');
+            newIntegrante.className = 'integrante-item';
+            newIntegrante.innerHTML = `<input type="text" name="integrantes[]" placeholder="Nome completo do integrante" required><button type="button" class="btn-remove-integrante" onclick="this.parentElement.remove()">X</button>`;
+            container.appendChild(newIntegrante);
+        }
+        
+        function populateFilterYears() {
+             const filterAno = document.getElementById('filterAno');
+             const anos = [...new Set(projects.map(p => p.ano))].sort((a, b) => b - a);
+             const optionsHTML = anos.map(ano => `<option value="${ano}">${ano}</option>`).join('');
+             filterAno.innerHTML = '<option value="">Todos os anos</option>' + optionsHTML;
+        }
+        
+        function displayProjects(projectsToDisplay = projects) {
+            const container = document.getElementById('projectsContainer');
+            if (projectsToDisplay.length === 0) { 
+                container.innerHTML = `<div class="empty-state"><h3>Nenhum projeto encontrado</h3><p>Tente ajustar sua busca ou cadastre um novo projeto.</p></div>`; 
+                return; 
+            }
+            container.innerHTML = projectsToDisplay.map(p => {
+                const dataFormatada = new Date(p.created_at).toLocaleDateString('pt-BR');
+                return `
+                <div class="project-card">
+                    <div>
+                        <h3>${p.nome_projeto}</h3>
+                        <div class="project-meta">
+                            <span class="project-tag">${p.turma}</span>
+                            <span class="project-tag">${p.ano}</span>
+                        </div>
+                        <div class="project-details">
+                             <p><strong>Integrantes:</strong> ${p.integrantes.join(', ')}</p>
+                             <p><strong>Docente:</strong> ${p.docente}</p>
+                             <p>${p.descricao}</p>
+                        </div>
+                    </div>
+                    <footer>Cadastrado em: ${dataFormatada}</footer>
+                </div>`;
+            }).join('');
+        }
+
+        function applyFilters() {
+            const keyword = document.getElementById('filterKeyword').value.toLowerCase().trim();
+            const turma = document.getElementById('filterTurma').value.toLowerCase().trim();
+            const ano = document.getElementById('filterAno').value;
+            
+            const filtered = projects.filter(p => {
+                const searchString = `${p.nome_projeto} ${p.descricao} ${p.integrantes.join(' ')} ${p.docente}`.toLowerCase();
+                const keywordMatch = keyword ? searchString.includes(keyword) : true;
+                const turmaMatch = turma ? p.turma.toLowerCase().includes(turma) : true;
+                const anoMatch = ano ? String(p.ano) === ano : true;
+                return keywordMatch && turmaMatch && anoMatch;
+            });
+            displayProjects(filtered);
+        }
+
+        function clearFilters() {
+            document.getElementById('filterKeyword').value = '';
+            document.getElementById('filterTurma').value = '';
+            document.getElementById('filterAno').value = '';
+            displayProjects(projects);
+        }
+    </script>
+</body>
+</html>
