@@ -769,22 +769,27 @@
               /\s/g,
               "_"
             )}`;
-            const bucket = supabaseClient.storage.from("midia_projetos");
 
+            // CORREÇÃO AQUI: Usando o nome do bucket com hífen
             const { data: uploadData, error: uploadError } =
-              await bucket.upload(nomeArquivo, midiaArquivo);
+              await supabaseClient.storage
+                .from("midia-projetos")
+                .upload(nomeArquivo, midiaArquivo);
 
             if (uploadError) {
               console.error("Erro no upload da mídia:", uploadError);
-              alert(
-                "Ocorreu um erro ao enviar a imagem/vídeo. O projeto não foi salvo."
-              );
+              // Mostra o erro específico retornado pelo Supabase
+              alert(`Erro no upload: ${uploadError.message}`);
               submitButton.disabled = false;
               submitButton.textContent = "Cadastrar Projeto";
               return;
             }
 
-            const { data: publicUrlData } = bucket.getPublicUrl(nomeArquivo);
+            // CORREÇÃO AQUI TAMBÉM: Usando o nome do bucket com hífen
+            const { data: publicUrlData } = supabaseClient.storage
+              .from("midia-projetos")
+              .getPublicUrl(nomeArquivo);
+
             urlDaMidia = publicUrlData.publicUrl;
           }
 
@@ -829,6 +834,8 @@
             document.getElementById(
               "integrantesContainer"
             ).innerHTML = `<div class="integrante-item"><input type="text" name="integrantes[]" placeholder="Nome completo do integrante" required></div>`;
+            document.getElementById("file-name").textContent =
+              "Nenhum arquivo selecionado";
             submitButton.disabled = false;
             submitButton.textContent = "Cadastrar Projeto";
 
