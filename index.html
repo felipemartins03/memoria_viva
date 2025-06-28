@@ -500,6 +500,87 @@
         font-style: italic;
         color: #555;
       }
+
+      /* --- Estilos para a Página Sobre Nós --- */
+
+      .manifesto p {
+        font-size: 1.1rem;
+        line-height: 1.7;
+        text-align: center;
+        max-width: 800px;
+        margin: 1rem auto;
+        color: #475569;
+      }
+
+      .equipe-grid {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+        margin-top: 2rem;
+      }
+
+      .equipe-card {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        padding: 2rem;
+        text-align: center;
+        width: 280px;
+      }
+
+      .equipe-card img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 1rem;
+        border: 4px solid #f0f4f8;
+      }
+
+      .equipe-card h4 {
+        font-size: 1.4rem;
+        color: #003366;
+        margin-bottom: 0.25rem;
+      }
+
+      .equipe-card .funcao {
+        color: #ff6600;
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+
+      .equipe-card .bio {
+        font-style: italic;
+        color: #64748b;
+        margin-bottom: 1.5rem;
+      }
+
+      .social-links a {
+        color: #003366;
+        text-decoration: none;
+        font-size: 1.5rem;
+        margin: 0 0.5rem;
+        transition: color 0.3s;
+      }
+
+      .social-links a:hover {
+        color: #ff6600;
+      }
+
+      .call-to-action {
+        text-align: center;
+        margin-top: 4rem;
+        background-color: #f8fafc;
+        padding: 2.5rem;
+        border-radius: 16px;
+      }
+
+      .call-to-action h3 {
+        color: #003366;
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+      }
     </style>
   </head>
   <body>
@@ -522,23 +603,45 @@
           </button>
           <nav class="desktop-nav">
             <ul>
-              <li><a onclick="showSection('home')">Início</a></li>
               <li>
-                <a onclick="showSection('cadastro')">Cadastrar Projeto</a>
+                <a onclick="showSection('home'); closeMobileMenu();">Início</a>
               </li>
               <li>
-                <a onclick="showSection('projetos')">Consultar Projetos</a>
+                <a onclick="showSection('cadastro'); closeMobileMenu();"
+                  >Cadastrar Projeto</a
+                >
+              </li>
+              <li>
+                <a onclick="showSection('projetos'); closeMobileMenu();"
+                  >Consultar Projetos</a
+                >
+              </li>
+              <li>
+                <a onclick="showSection('sobre-nos'); closeMobileMenu();"
+                  >Sobre Nós</a
+                >
               </li>
             </ul>
           </nav>
           <nav class="mobile-nav">
             <ul>
-              <li><a onclick="showSection('home')">Início</a></li>
               <li>
-                <a onclick="showSection('cadastro')">Cadastrar Projeto</a>
+                <a onclick="showSection('home'); closeMobileMenu();">Início</a>
               </li>
               <li>
-                <a onclick="showSection('projetos')">Consultar Projetos</a>
+                <a onclick="showSection('cadastro'); closeMobileMenu();"
+                  >Cadastrar Projeto</a
+                >
+              </li>
+              <li>
+                <a onclick="showSection('projetos'); closeMobileMenu();"
+                  >Consultar Projetos</a
+                >
+              </li>
+              <li>
+                <a onclick="showSection('sobre-nos'); closeMobileMenu();"
+                  >Sobre Nós</a
+                >
               </li>
             </ul>
           </nav>
@@ -709,6 +812,75 @@
             </div>
           </div>
           <div id="projectsContainer" class="projects-grid"></div>
+        </div>
+      </section>
+
+      <section id="sobre-nos" class="section">
+        <div class="container">
+          <h2>Nossa História: Da Ideia ao Impacto</h2>
+
+          <div class="manifesto">
+            <p>
+              Todo projeto de conclusão de curso deixa um legado. O Memória Viva
+              garante que esse legado, especialmente o de impacto social, não
+              seja apenas uma memória. Nossa plataforma foi desenhada para
+              preservar cada Projeto Integrador, permitindo que o trabalho de
+              uma turma sirva de ponto de partida para a próxima. Conectamos
+              estudantes a benfeitorias que necessitam de apoio constante,
+              transformando o esforço acadêmico em uma corrente de impacto real
+              e contínuo.
+            </p>
+          </div>
+
+          <h3
+            style="
+              text-align: center;
+              margin-top: 3rem;
+              margin-bottom: 2rem;
+              color: #003366;
+            "
+          >
+            Os Idealizadores
+          </h3>
+
+          <div class="equipe-grid">
+            <div class="equipe-card">
+              <img
+                src="[COLOQUE A URL DA SUA FOTO AQUI]"
+                alt="Foto do [SEU NOME]"
+              />
+              <h4>[SEU NOME]</h4>
+              <p class="funcao">Idealizador & Desenvolvedor</p>
+              <p class="bio">"[COLOQUE SUA FRASE DE MOTIVAÇÃO AQUI]"</p>
+              <div class="social-links">
+                <a href="[URL_LINKEDIN]" target="_blank"
+                  ><i class="fab fa-linkedin"></i
+                ></a>
+                <a href="[URL_GITHUB]" target="_blank"
+                  ><i class="fab fa-github"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="call-to-action">
+            <h3>Faça Parte Deste Legado</h3>
+            <div>
+              <a
+                href="#"
+                class="btn btn-primary"
+                onclick="showSection('projetos')"
+                >Continuar um Projeto</a
+              >
+              <a
+                href="#"
+                class="btn btn-secondary"
+                onclick="showSection('cadastro')"
+                style="margin-left: 1rem"
+                >Compartilhar Projeto</a
+              >
+            </div>
+          </div>
         </div>
       </section>
     </main>
