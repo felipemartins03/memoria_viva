@@ -466,7 +466,7 @@
         }
       }
 
-      /* --- Estilos para o Botão de Upload Personalizado (CORRIGIDO) --- */
+      /* --- Estilos para o Botão de Upload Personalizado --- */
 
       /* Esconde o input de arquivo original */
       .file-upload-wrapper input[type="file"] {
@@ -508,8 +508,6 @@
       const SUPABASE_ANON_KEY =
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpYWViZ3dzbWlqd3BqcHloZGJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5ODYxMzIsImV4cCI6MjA2NjU2MjEzMn0.dZbXp9_Gf6rRJLGoxTxx2r0mfTBMDCipyf7k2E0zNag";
 
-      // A variável global 'supabase' vem do script da CDN.
-      // Criamos nosso cliente específico com um novo nome, como 'supabaseClient'.
       const supabaseClient = supabase.createClient(
         SUPABASE_URL,
         SUPABASE_ANON_KEY
@@ -547,13 +545,6 @@
         </div>
       </div>
     </header>
-
-    <script>
-      function toggleMobileMenu() {
-        const mobileNav = document.querySelector(".mobile-nav");
-        mobileNav.classList.toggle("active");
-      }
-    </script>
 
     <main>
       <section id="home" class="section active">
@@ -741,14 +732,16 @@
     <script>
       let projects = [];
 
+      function toggleMobileMenu() {
+        const mobileNav = document.querySelector(".mobile-nav");
+        mobileNav.classList.toggle("active");
+      }
+
       async function fetchAndDisplayProjects() {
         const { data, error } = await supabaseClient
           .from("db_memoria_viva")
           .select("*")
           .order("created_at", { ascending: false });
-
-        // ADICIONE ESTA LINHA PARA ESPIONAR OS DADOS
-        console.log("Dados recebidos do Supabase:", data);
 
         if (error) {
           console.error("Erro ao buscar projetos:", error);
@@ -759,13 +752,12 @@
         }
       }
 
-      document;
       document
         .getElementById("projectForm")
         .addEventListener("submit", async function (e) {
           e.preventDefault();
           const form = e.target;
-          const submitButton = form.querySelector('button [type="submit"]');
+          const submitButton = form.querySelector('button[type="submit"]');
           submitButton.disabled = true;
           submitButton.textContent = "Enviando...";
 
@@ -776,7 +768,7 @@
             const nomeArquivo = `${Date.now()}_${midiaArquivo.name.replace(
               /\s/g,
               "_"
-            )}`; // Remove espaços do nome
+            )}`;
             const bucket = supabaseClient.storage.from("midia_projetos");
 
             const { data: uploadData, error: uploadError } =
@@ -797,7 +789,7 @@
           }
 
           const integrantesList = Array.from(
-            document.querySelectorAll('input [name="integrantes[]"]')
+            document.querySelectorAll('input[name="integrantes[]"]')
           )
             .map((input) => input.value.trim())
             .filter(Boolean);
@@ -917,32 +909,32 @@
                 midiaHtml = `<img src="${p.url_midia}" alt="Capa do projeto ${p.nome_projeto}" style="width:100%; border-radius: 8px; margin-bottom: 1rem;">`;
               } else if (p.url_midia.match(/\.(mp4|webm|ogg)$/i)) {
                 midiaHtml = `
-                    <video controls style="width:100%; border-radius: 8px; margin-bottom: 1rem;">
-                        <source src="${p.url_midia}" type="video/mp4">
-                        Seu navegador não suporta vídeos em HTML5.
-                    </video>
-                `;
+                      <video controls style="width:100%; border-radius: 8px; margin-bottom: 1rem;">
+                          <source src="${p.url_midia}" type="video/mp4">
+                          Seu navegador não suporta vídeos em HTML5.
+                      </video>
+                  `;
               }
             }
 
             return `
         <div class="project-card">
-            ${midiaHtml}
-            <div>
-                <h3>${p.nome_projeto}</h3>
-                <div class="project-meta">
-                    <span class="project-tag">${p.turma}</span>
-                    <span class="project-tag">${p.ano}</span>
-                </div>
-                <div class="project-details">
-                     <p><strong>Integrantes:</strong> ${p.integrantes.join(
-                       ", "
-                     )}</p>
-                     <p><strong>Docente:</strong> ${p.docente}</p>
-                     <p>${p.descricao}</p>
-                </div>
-            </div>
-            <footer>Cadastrado em: ${dataFormatada}</footer>
+              ${midiaHtml}
+              <div>
+                  <h3>${p.nome_projeto}</h3>
+                  <div class="project-meta">
+                      <span class="project-tag">${p.turma}</span>
+                      <span class="project-tag">${p.ano}</span>
+                  </div>
+                  <div class="project-details">
+                           <p><strong>Integrantes:</strong> ${
+                             p.integrantes ? p.integrantes.join(", ") : "N/A"
+                           }</p>
+                           <p><strong>Docente:</strong> ${p.docente}</p>
+                           <p>${p.descricao}</p>
+                  </div>
+              </div>
+              <footer>Cadastrado em: ${dataFormatada}</footer>
         </div>`;
           })
           .join("");
@@ -960,9 +952,9 @@
         const ano = document.getElementById("filterAno").value;
 
         const filtered = projects.filter((p) => {
-          const searchString = `${p.nome_projeto} ${
-            p.descricao
-          } ${p.integrantes.join(" ")} ${p.docente}`.toLowerCase();
+          const searchString = `${p.nome_projeto} ${p.descricao} ${(
+            p.integrantes || []
+          ).join(" ")} ${p.docente}`.toLowerCase();
           const keywordMatch = keyword ? searchString.includes(keyword) : true;
           const turmaMatch = turma
             ? p.turma.toLowerCase().includes(turma)
