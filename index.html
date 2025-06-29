@@ -188,8 +188,11 @@
       .project-card {
         padding: 2rem;
         transition: transform 0.3s, box-shadow 0.3s;
+        cursor: pointer;
         display: flex;
         flex-direction: column;
+        border: 1px solid #e2e8f0; /* Adicionando uma borda cinza clara */
+        border-radius: 16px; /* Mantendo o arredondamento */
       }
 
       /* Esta nova regra faz o conteúdo principal crescer para preencher o espaço */
@@ -648,6 +651,25 @@
           transform: translateY(0);
           opacity: 1;
         }
+      }
+
+      .call-to-action .btn-primary,
+      .call-to-action .btn-secondary {
+        background-color: #f0f4f8; /* Um fundo cinza bem claro */
+        color: #003366; /* Cor do texto azul escuro */
+        border: 1px solid #d1d5db; /* Uma borda cinza clara */
+      }
+
+      .call-to-action .btn-primary:hover {
+        background-color: #e2e8f0;
+        color: #003366;
+        border-color: #003366;
+      }
+
+      .call-to-action .btn-secondary:hover {
+        background-color: #e2e8f0;
+        color: #003366;
+        border-color: #003366;
       }
     </style>
   </head>
@@ -1184,7 +1206,6 @@
         filterAno.innerHTML =
           '<option value="">Todos os anos</option>' + optionsHTML;
       }
-
       function displayProjects(projectsToDisplay = projects) {
         const container = document.getElementById("projectsContainer");
         if (!projectsToDisplay || projectsToDisplay.length === 0) {
@@ -1197,19 +1218,20 @@
               "pt-BR"
             );
 
-            // <-- 1. LÓGICA PARA CORTAR A DESCRIÇÃO (ENTRA AQUI)
             const descricaoCurta =
               p.descricao.length > 100
                 ? p.descricao.substring(0, 100) + "..."
                 : p.descricao;
 
-            const midiaHtml = p.url_midia
-              ? p.url_midia.match(/\.(jpeg|jpg|gif|png)$/i)
+            let midiaHtml = "";
+            if (p.url_midia) {
+              midiaHtml = p.url_midia.match(/\.(jpeg|jpg|gif|png)$/i)
                 ? `<img src="${p.url_midia}" alt="Capa" style="width:100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 8px 8px 0 0;">`
-                : `<video controls style="width:100%; border-radius: 8px 8px 0 0;"><source src="${p.url_midia}" type="video/mp4"></video>`
-              : "";
+                : `<video controls style="width:100%; border-radius: 8px 8px 0 0;"><source src="${p.url_midia}" type="video/mp4"></video>`;
+            } else {
+              midiaHtml = `<img src="Imagens/placeholder.png" alt="Projeto sem mídia" style="width:100%; aspect-ratio: 16/9; object-fit: contain; background-color: #f0f0f0; border-radius: 8px 8px 0 0;">`;
+            }
 
-            // O return agora inclui o onclick e usa a descricaoCurta
             return `
             <div class="project-card" onclick="abrirModalDetalhes(${p.id})">
                 ${midiaHtml}
