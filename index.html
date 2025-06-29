@@ -186,9 +186,15 @@
       .form-container,
       .filters-container,
       .project-card {
-        background: white;
-        border-radius: 16px;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        padding: 2rem;
+        transition: transform 0.3s, box-shadow 0.3s;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Esta nova regra faz o conteúdo principal crescer para preencher o espaço */
+      .project-card .card-content {
+        flex-grow: 1;
       }
       .form-container {
         padding: 3rem;
@@ -305,6 +311,7 @@
       .project-card h3 {
         color: #003366;
         margin-bottom: 1rem;
+        text-transform: capitalize;
       }
       .project-meta {
         display: flex;
@@ -587,6 +594,61 @@
         text-decoration: none;
         color: white;
       }
+      /* --- Estilos para o Modal de Detalhes --- */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 2000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.6);
+        animation: fadeIn 0.3s;
+      }
+      .modal-content {
+        background-color: #fff;
+        margin: 5% auto;
+        padding: 40px;
+        border-radius: 16px;
+        width: 80%;
+        max-width: 800px;
+        position: relative;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        animation: slideIn 0.4s ease-out;
+      }
+      .close-button {
+        color: #aaa;
+        position: absolute;
+        top: 15px;
+        right: 25px;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      .close-button:hover,
+      .close-button:focus {
+        color: #000;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes slideIn {
+        from {
+          transform: translateY(-50px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
     </style>
   </head>
   <body>
@@ -599,6 +661,41 @@
         SUPABASE_URL,
         SUPABASE_ANON_KEY
       );
+
+      function abrirModalDetalhes(projectId) {
+        const projeto = projects.find((p) => p.id === projectId);
+        if (!projeto) return;
+
+        const modal = document.getElementById("projectModal");
+        const modalBody = document.getElementById("modalBody");
+
+        const midiaHtml = projeto.url_midia
+          ? projeto.url_midia.match(/\.(jpeg|jpg|gif|png)$/i)
+            ? `<img src="${projeto.url_midia}" alt="Capa do projeto" style="width:100%; border-radius: 8px; margin-bottom: 1rem;">`
+            : `<video controls style="width:100%; border-radius: 8px; margin-bottom: 1rem;"><source src="${projeto.url_midia}" type="video/mp4"></video>`
+          : "";
+
+        modalBody.innerHTML = `
+        ${midiaHtml}
+        <h2>${projeto.nome_projeto}</h2>
+        <p><strong>Turma:</strong> ${projeto.turma} | <strong>Ano:</strong> ${
+          projeto.ano
+        }</p>
+        <p><strong>Docente:</strong> ${projeto.docente}</p>
+        <p><strong>Integrantes:</strong> ${
+          projeto.integrantes ? projeto.integrantes.join(", ") : "N/A"
+        }</p>
+        <hr style="margin: 20px 0;">
+        <p>${projeto.descricao.replace(/\n/g, "<br>")}</p> 
+    `;
+
+        modal.style.display = "block";
+      }
+
+      function fecharModalDetalhes() {
+        const modal = document.getElementById("projectModal");
+        modal.style.display = "none";
+      }
     </script>
     <header>
       <div class="container">
@@ -1099,39 +1196,38 @@
             const dataFormatada = new Date(p.created_at).toLocaleDateString(
               "pt-BR"
             );
-            let midiaHtml = "";
-            if (p.url_midia) {
-              if (p.url_midia.match(/\.(jpeg|jpg|gif|png)$/i)) {
-                midiaHtml = `<img src="${p.url_midia}" alt="Capa do projeto ${p.nome_projeto}" style="width:100%; border-radius: 8px; margin-bottom: 1rem;">`;
-              } else if (p.url_midia.match(/\.(mp4|webm|ogg)$/i)) {
-                midiaHtml = `
-                      <video controls style="width:100%; border-radius: 8px; margin-bottom: 1rem;">
-                          <source src="${p.url_midia}" type="video/mp4">
-                          Seu navegador não suporta vídeos em HTML5.
-                      </video>
-                  `;
-              }
-            }
 
+            // <-- 1. LÓGICA PARA CORTAR A DESCRIÇÃO (ENTRA AQUI)
+            const descricaoCurta =
+              p.descricao.length > 100
+                ? p.descricao.substring(0, 100) + "..."
+                : p.descricao;
+
+            const midiaHtml = p.url_midia
+              ? p.url_midia.match(/\.(jpeg|jpg|gif|png)$/i)
+                ? `<img src="${p.url_midia}" alt="Capa" style="width:100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 8px 8px 0 0;">`
+                : `<video controls style="width:100%; border-radius: 8px 8px 0 0;"><source src="${p.url_midia}" type="video/mp4"></video>`
+              : "";
+
+            // O return agora inclui o onclick e usa a descricaoCurta
             return `
-        <div class="project-card">
-              ${midiaHtml}
-              <div>
-                  <h3>${p.nome_projeto}</h3>
-                  <div class="project-meta">
-                      <span class="project-tag">${p.turma}</span>
-                      <span class="project-tag">${p.ano}</span>
-                  </div>
-                  <div class="project-details">
-                           <p><strong>Integrantes:</strong> ${
-                             p.integrantes ? p.integrantes.join(", ") : "N/A"
-                           }</p>
-                           <p><strong>Docente:</strong> ${p.docente}</p>
-                           <p>${p.descricao}</p>
-                  </div>
-              </div>
-              <footer>Cadastrado em: ${dataFormatada}</footer>
-        </div>`;
+            <div class="project-card" onclick="abrirModalDetalhes(${p.id})">
+                ${midiaHtml}
+                <div class="card-content" style="padding: 1.5rem;">
+                    <h3>${p.nome_projeto}</h3>
+                    <div class="project-meta">
+                        <span class="project-tag">${p.turma}</span>
+                        <span class="project-tag">${p.ano}</span>
+                    </div>
+                    <div class="project-details">
+                        <p><strong>Integrantes:</strong> ${
+                          p.integrantes ? p.integrantes.join(", ") : "N/A"
+                        }</p>
+                        <p>${descricaoCurta}</p>
+                    </div>
+                </div>
+                <footer style="padding: 0 1.5rem 1.5rem;">Ver mais detalhes</footer>
+            </div>`;
           })
           .join("");
       }
@@ -1168,5 +1264,13 @@
         displayProjects(projects);
       }
     </script>
+    <div id="projectModal" class="modal">
+      <div class="modal-content">
+        <span class="close-button" onclick="fecharModalDetalhes()"
+          >&times;</span
+        >
+        <div id="modalBody"></div>
+      </div>
+    </div>
   </body>
 </html>
