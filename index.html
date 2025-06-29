@@ -581,6 +581,12 @@
         font-size: 1.8rem;
         margin-bottom: 1.5rem;
       }
+
+      /* Remove o sublinhado e a cor padrão do link no logo */
+      .logo-link {
+        text-decoration: none;
+        color: white;
+      }
     </style>
   </head>
   <body>
@@ -597,36 +603,17 @@
     <header>
       <div class="container">
         <div class="header-content">
-    <a href="#" onclick="showSection('home')" class="logo-link">
-        <div class="logo"><i class="fas fa-book-open"></i> Memória Viva</div>
-    </a>
-    </div>
+          <a href="#" onclick="showSection('home')" class="logo-link">
+            <div class="logo">
+              <i class="fas fa-book-open"></i> Memória Viva
+            </div>
+          </a>
+
           <button class="hamburger-btn" onclick="toggleMobileMenu()">
             <i class="fas fa-bars"></i>
           </button>
+
           <nav class="desktop-nav">
-            <ul>
-              <li>
-                <a onclick="showSection('home'); closeMobileMenu();">Início</a>
-              </li>
-              <li>
-                <a onclick="showSection('cadastro'); closeMobileMenu();"
-                  >Cadastrar Projeto</a
-                >
-              </li>
-              <li>
-                <a onclick="showSection('projetos'); closeMobileMenu();"
-                  >Consultar Projetos</a
-                >
-              </li>
-              <li>
-                <a onclick="showSection('sobre-nos'); closeMobileMenu();"
-                  >Sobre Nós</a
-                >
-              </li>
-            </ul>
-          </nav>
-          <nav class="mobile-nav">
             <ul>
               <li>
                 <a onclick="showSection('home'); closeMobileMenu();">Início</a>
@@ -650,6 +637,28 @@
           </nav>
         </div>
       </div>
+      <nav class="mobile-nav">
+        <ul>
+          <li>
+            <a onclick="showSection('home'); closeMobileMenu();">Início</a>
+          </li>
+          <li>
+            <a onclick="showSection('cadastro'); closeMobileMenu();"
+              >Cadastrar Projeto</a
+            >
+          </li>
+          <li>
+            <a onclick="showSection('projetos'); closeMobileMenu();"
+              >Consultar Projetos</a
+            >
+          </li>
+          <li>
+            <a onclick="showSection('sobre-nos'); closeMobileMenu();"
+              >Sobre Nós</a
+            >
+          </li>
+        </ul>
+      </nav>
     </header>
 
     <main>
