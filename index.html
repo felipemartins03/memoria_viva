@@ -420,6 +420,10 @@
       @media (max-width: 768px) {
         .desktop-nav {
           display: none; /* Oculta o menu desktop */
+          /* Ajusta a linha laranja APENAS no menu mobile */
+          .mobile-nav a:hover::after {
+            width: 50%; /* Faz a linha ser menor e mais proporcional ao texto */
+          }
         }
 
         .hamburger-btn {
@@ -473,6 +477,19 @@
 
         .hero-banner p {
           font-size: 1rem;
+        }
+
+        /* ADICIONE ESTE NOVO BLOCO */
+        .hero-banner .hero-content > div {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 1rem; /* <-- Esta linha adiciona o espaçamento! */
+        }
+
+        .hero-banner .hero-content .btn {
+          width: 90%; /* Faz os botões terem a mesma largura */
+          margin-left: 0 !important; /* Remove a margem que existia */
         }
       }
 
