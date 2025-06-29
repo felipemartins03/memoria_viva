@@ -1224,18 +1224,41 @@
                 : p.descricao;
 
             let midiaHtml = "";
+
+            // Se o projeto tiver uma URL de mídia, exibe a mídia
             if (p.url_midia) {
-              midiaHtml = p.url_midia.match(/\.(jpeg|jpg|gif|png)$/i)
-                ? `<img src="${p.url_midia}" alt="Capa" style="width:100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 8px 8px 0 0;">`
-                : `<video controls style="width:100%; border-radius: 8px 8px 0 0;"><source src="${p.url_midia}" type="video/mp4"></video>`;
-            } else {
-              midiaHtml = `<img src="Imagens/placeholder.png" alt="Projeto sem mídia" style="width:100%; aspect-ratio: 16/9; object-fit: contain; background-color: #f0f0f0; border-radius: 8px 8px 0 0;">`;
+              const estiloMidia = `width:100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 16px 16px 0 0;`;
+
+              if (p.url_midia.match(/\.(jpeg|jpg|gif|png)$/i)) {
+                midiaHtml = `<img src="${p.url_midia}" alt="Capa do projeto ${p.nome_projeto}" style="${estiloMidia}">`;
+              } else if (p.url_midia.match(/\.(mp4|webm|ogg)$/i)) {
+                midiaHtml = `<video controls style="${estiloMidia}"><source src="${p.url_midia}" type="video/mp4"></video>`;
+              }
             }
+            // SENÃO, exibe o ícone SVG padrão
+            else {
+              const placeholderSvg = `
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3Z" stroke="#cccccc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8.5 10C9.32843 10 10 9.32843 10 8.5C10 7.67157 9.32843 7 8.5 7C7.67157 7 7 7.67157 7 8.5C7 9.32843 7.67157 10 8.5 10Z" stroke="#cccccc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M21 15L16 10L5 21" stroke="#cccccc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>`;
+
+              midiaHtml = `<div style="width:100%; aspect-ratio: 16/9; background-color: #f8f9fa; display: flex; align-items: center; justify-content: center; border-radius: 16px 16px 0 0; border-bottom: 1px solid #e9ecef;">
+                            ${placeholderSvg}
+                         </div>`;
+            }
+
+            // A estrutura do card foi ajustada para a imagem ocupar todo o topo
+            const cardPadding = "padding: 1.5rem;";
+            const cardFooterPadding = "padding: 0 1.5rem 1.5rem;";
 
             return `
             <div class="project-card" onclick="abrirModalDetalhes(${p.id})">
                 ${midiaHtml}
-                <div class="card-content" style="padding: 1.5rem;">
+                <div class="card-content" style="${
+                  midiaHtml ? cardPadding : ""
+                }">
                     <h3>${p.nome_projeto}</h3>
                     <div class="project-meta">
                         <span class="project-tag">${p.turma}</span>
@@ -1248,7 +1271,11 @@
                         <p>${descricaoCurta}</p>
                     </div>
                 </div>
-                <footer style="padding: 0 1.5rem 1.5rem;">Ver mais detalhes</footer>
+                <footer style="${
+                  midiaHtml
+                    ? cardFooterPadding
+                    : `padding: 0; margin-top: auto; border-top: 1px solid #eee; padding-top: 1rem;`
+                }">Ver mais detalhes</footer>
             </div>`;
           })
           .join("");
