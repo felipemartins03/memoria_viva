@@ -878,6 +878,44 @@
                   name="nomeProjeto"
                   required
                 />
+                <div class="form-group">
+                  <label for="area">Área do Curso *</label>
+                  <select id="area" name="area" required>
+                    <option value="" disabled selected>
+                      Selecione uma área
+                    </option>
+                    <option value="Beleza e Estética">Beleza e Estética</option>
+                    <option value="Bem-estar">Bem-estar</option>
+                    <option value="Comunicação e Marketing">
+                      Comunicação e Marketing
+                    </option>
+                    <option value="Desenvolvimento Social">
+                      Desenvolvimento Social
+                    </option>
+                    <option value="Design, Artes e Arquitetura">
+                      Design, Artes e Arquitetura
+                    </option>
+                    <option value="Educação">Educação</option>
+                    <option value="Gastronomia e Alimentação">
+                      Gastronomia e Alimentação
+                    </option>
+                    <option value="Gestão e Negócios">Gestão e Negócios</option>
+                    <option value="Idiomas">Idiomas</option>
+                    <option
+                      value="Meio Ambiente, Segurança e Saúde no Trabalho"
+                    >
+                      Meio Ambiente, Segurança e Saúde no Trabalho
+                    </option>
+                    <option value="Moda">Moda</option>
+                    <option value="Saúde">Saúde</option>
+                    <option value="Tecnologia da Informação">
+                      Tecnologia da Informação
+                    </option>
+                    <option value="Turismo e Hospitalidade">
+                      Turismo e Hospitalidade
+                    </option>
+                  </select>
+                </div>
               </div>
               <div class="form-group">
                 <label for="turma">Nome da Turma *</label
@@ -920,6 +958,40 @@
         <div class="container">
           <h2>Projetos Cadastrados</h2>
           <div class="filters-container">
+            <div class="filter-item">
+              <label for="filterArea">Filtrar por Área:</label>
+              <select id="filterArea">
+                <option value="">Todas as áreas</option>
+                <option value="Beleza e Estética">Beleza e Estética</option>
+                <option value="Bem-estar">Bem-estar</option>
+                <option value="Comunicação e Marketing">
+                  Comunicação e Marketing
+                </option>
+                <option value="Desenvolvimento Social">
+                  Desenvolvimento Social
+                </option>
+                <option value="Design, Artes e Arquitetura">
+                  Design, Artes e Arquitetura
+                </option>
+                <option value="Educação">Educação</option>
+                <option value="Gastronomia e Alimentação">
+                  Gastronomia e Alimentação
+                </option>
+                <option value="Gestão e Negócios">Gestão e Negócios</option>
+                <option value="Idiomas">Idiomas</option>
+                <option value="Meio Ambiente, Segurança e Saúde no Trabalho">
+                  Meio Ambiente, Segurança e Saúde no Trabalho
+                </option>
+                <option value="Moda">Moda</option>
+                <option value="Saúde">Saúde</option>
+                <option value="Tecnologia da Informação">
+                  Tecnologia da Informação
+                </option>
+                <option value="Turismo e Hospitalidade">
+                  Turismo e Hospitalidade
+                </option>
+              </select>
+            </div>
             <div class="filter-item">
               <label for="filterKeyword">Buscar por Palavra-Chave:</label
               ><input
@@ -1134,6 +1206,7 @@
           const projectData = {
             integrantes: integrantesList,
             nome_projeto: formData.get("nomeProjeto"),
+            area: formData.get("area"),
             turma: formData.get("turma"),
             docente: formData.get("docente"),
             ano: formData.get("ano"),
@@ -1277,10 +1350,13 @@
                   midiaHtml ? cardPadding : ""
                 }">
                     <h3>${p.nome_projeto}</h3>
-                    <div class="project-meta">
-                        <span class="project-tag">${p.turma}</span>
-                        <span class="project-tag">${p.ano}</span>
-                    </div>
+<div class="project-meta">
+    <span class="project-tag" style="background-color: #007bff;">${
+      p.area
+    }</span> 
+    <span class="project-tag">${p.turma}</span>
+    <span class="project-tag">${p.ano}</span>
+</div>
                     <div class="project-details">
                         <p><strong>Integrantes:</strong> ${
                           p.integrantes ? p.integrantes.join(", ") : "N/A"
@@ -1308,17 +1384,21 @@
           .value.toLowerCase()
           .trim();
         const ano = document.getElementById("filterAno").value;
+        const area = document.getElementById("filterArea").value; // <-- PEGA O VALOR DA ÁREA
 
         const filtered = projects.filter((p) => {
           const searchString = `${p.nome_projeto} ${p.descricao} ${(
             p.integrantes || []
           ).join(" ")} ${p.docente}`.toLowerCase();
+
           const keywordMatch = keyword ? searchString.includes(keyword) : true;
           const turmaMatch = turma
             ? p.turma.toLowerCase().includes(turma)
             : true;
           const anoMatch = ano ? String(p.ano) === ano : true;
-          return keywordMatch && turmaMatch && anoMatch;
+          const areaMatch = area ? p.area === area : true; // <-- LÓGICA DO FILTRO DE ÁREA
+
+          return keywordMatch && turmaMatch && anoMatch && areaMatch; // <-- INCLUI A VERIFICAÇÃO
         });
         displayProjects(filtered);
       }
