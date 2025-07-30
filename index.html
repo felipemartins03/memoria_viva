@@ -52,6 +52,10 @@
       .logo i {
         font-size: 1.8rem;
       }
+       .logo-link {
+        text-decoration: none;
+        color: white; 
+      }
       nav ul {
         list-style: none;
         display: flex;
@@ -186,18 +190,9 @@
       .form-container,
       .filters-container,
       .project-card {
-        padding: 2rem;
-        transition: transform 0.3s, box-shadow 0.3s;
-        cursor: pointer;
-        display: flex;
-        flex-direction: column;
-        border: 1px solid #e2e8f0; /* Adicionando uma borda cinza clara */
-        border-radius: 16px; /* Mantendo o arredondamento */
-      }
-
-      /* Esta nova regra faz o conteúdo principal crescer para preencher o espaço */
-      .project-card .card-content {
-        flex-grow: 1;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
       }
       .form-container {
         padding: 3rem;
@@ -232,6 +227,15 @@
         background-color: white;
         box-shadow: 0 0 0 3px rgba(255, 102, 0, 0.1);
       }
+      .form-group-row {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .form-group-row .form-group {
+        flex: 1;
+        min-width: 150px;
+      }
       .integrantes-list {
         display: flex;
         flex-direction: column;
@@ -246,709 +250,296 @@
         flex-grow: 1;
       }
       .btn-remove-integrante {
-        background: #ef4444;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        width: 40px;
-        height: 40px;
-        cursor: pointer;
-        font-weight: bold;
+        background: #ef4444; color: white; border: none;
+        border-radius: 8px; width: 40px; height: 40px;
+        cursor: pointer; font-weight: bold;
       }
       .btn-add-integrante {
-        background: #22c55e;
-        color: white;
-        border: none;
-        padding: 10px 15px;
-        border-radius: 8px;
-        cursor: pointer;
-        margin-top: 10px;
-        font-weight: 500;
+        background: #22c55e; color: white; border: none;
+        padding: 10px 15px; border-radius: 8px;
+        cursor: pointer; margin-top: 10px; font-weight: 500;
       }
       .filters-container {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr auto;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
         gap: 1.5rem;
         align-items: end;
         margin-bottom: 2.5rem;
         padding: 2rem;
       }
       .filter-item label {
-        display: block;
-        margin-bottom: 0.5rem;
-        font-weight: 500;
-        color: #334155;
-        font-size: 0.9rem;
+        display: block; margin-bottom: 0.5rem; font-weight: 500;
+        color: #334155; font-size: 0.9rem;
       }
-      .filter-item input,
-      .filter-item select {
-        width: 100%;
-        padding: 14px;
-        border: 2px solid #e2e8f0;
-        border-radius: 10px;
-        font-size: 1rem;
+      .filter-item input, .filter-item select {
+        width: 100%; padding: 14px; border: 2px solid #e2e8f0;
+        border-radius: 10px; font-size: 1rem;
       }
       .btn-accent {
-        background-color: #ff6600;
-        color: white;
-        border: none;
+        background-color: #ff6600; color: white; border: none;
       }
-      .btn-accent:hover {
-        background-color: #e55a00;
-      }
+      .btn-accent:hover { background-color: #e55a00; }
       .projects-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
         gap: 2rem;
       }
       .project-card {
-        padding: 2rem;
+        padding: 0; /* Removido padding para a imagem preencher */
         transition: transform 0.3s, box-shadow 0.3s;
+        cursor: pointer;
         display: flex;
         flex-direction: column;
+        border: 1px solid #e2e8f0;
       }
       .project-card:hover {
         transform: translateY(-5px);
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+      .project-card .card-content {
+        flex-grow: 1; 
+        padding: 1.5rem;
       }
       .project-card h3 {
         color: #003366;
         margin-bottom: 1rem;
         text-transform: capitalize;
       }
+      .project-card footer {
+        border-top: 1px solid #eee;
+        padding: 1rem 1.5rem;
+        color: #003366;
+        font-weight: 600;
+        background-color: #f8f9fa;
+        border-radius: 0 0 16px 16px;
+      }
       .project-meta {
-        display: flex;
-        gap: 0.75rem;
-        margin-bottom: 1rem;
-        flex-wrap: wrap;
+        display: flex; gap: 0.75rem; margin-bottom: 1rem; flex-wrap: wrap;
       }
       .project-tag {
-        background: #ff6600;
-        color: white;
-        padding: 0.4rem 1rem;
-        border-radius: 20px;
-        font-size: 0.8rem;
-        font-weight: 600;
+        color: white; padding: 0.4rem 1rem;
+        border-radius: 20px; font-size: 0.8rem; font-weight: 600;
       }
       .project-details p {
-        margin-bottom: 0.75rem;
-        color: #475569;
+        margin-bottom: 0.75rem; color: #475569;
       }
-      .project-details strong {
-        color: #1e293b;
-      }
-      .project-card footer {
-        margin-top: auto;
-        padding-top: 1rem;
-        border-top: 1px solid #e2e8f0;
-        font-size: 0.85rem;
-        color: #64748b;
-      }
+      .project-details strong { color: #1e293b; }
       .empty-state {
-        text-align: center;
-        padding: 3rem;
-        color: #666;
+        text-align: center; padding: 3rem; color: #666;
         grid-column: 1 / -1;
       }
       .success-message {
-        background: #10b981;
-        color: white;
-        padding: 1rem;
-        border-radius: 8px;
-        margin-bottom: 1.5rem;
-        display: none;
+        background: #10b981; color: white; padding: 1rem;
+        border-radius: 8px; margin-bottom: 1.5rem; display: none;
       }
 
-      /* Estilos para o botão do hambúrguer */
-      .hamburger-btn {
-        display: none; /* Oculto por padrão em telas maiores */
-        background: transparent;
-        border: none;
-        color: white;
-        font-size: 1.5rem;
-        cursor: pointer;
-        padding: 0.5rem;
-      }
-
-      /* Estilos para o menu mobile */
-      .mobile-nav {
-        display: none; /* Oculto por padrão */
-        background-color: #003366;
-        position: absolute;
-        top: 100%; /* Abaixo do header */
-        left: 0;
-        width: 100%;
-        z-index: 1001;
-        padding: 1rem 0;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-      }
-
-      .mobile-nav.active {
-        display: block;
-      }
-
-      .mobile-nav ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 1rem;
-      }
-
-      .mobile-nav a {
-        color: white;
-        text-decoration: none;
-        padding: 0.8rem 1.5rem;
-        border-radius: 8px;
-        width: 90%;
-        text-align: center;
-        display: block;
-      }
-
-      .mobile-nav a:hover {
-        background-color: rgba(255, 255, 255, 0.1);
-      }
-
-      /* Esconde o menu desktop em telas menores */
-      .desktop-nav {
-        display: block; /* Mostra por padrão */
-      }
-
-      /* Media Query para telas menores (ex: tablets e celulares) */
+      /* Estilos do Menu Hambúrguer e Responsividade */
+      .desktop-nav { display: block; }
+      .mobile-nav, .hamburger-btn { display: none; }
+      .mobile-nav ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+      .mobile-nav a { color: white; text-decoration: none; padding: 0.8rem 1.5rem; border-radius: 8px; width: 90%; text-align: center; display: block; }
+      .mobile-nav a:hover { background-color: rgba(255, 255, 255, 0.1); }
       @media (max-width: 768px) {
-        .desktop-nav {
-          display: none; /* Oculta o menu desktop */
-          /* Ajusta a linha laranja APENAS no menu mobile */
-          .mobile-nav a:hover::after {
-            width: 50%; /* Faz a linha ser menor e mais proporcional ao texto */
-          }
-        }
-
-        .hamburger-btn {
-          display: block; /* Mostra o botão hambúrguer */
-        }
-
-        .header-content {
-          justify-content: space-between; /* Espaça logo e botão */
-        }
-
-        nav ul {
-          flex-direction: column; /* Menu em coluna no mobile */
-          align-items: stretch; /* Itens ocupam a largura */
-        }
-
-        nav li {
-          width: 100%;
-        }
-
-        nav a {
-          display: block; /* Links ocupam a largura */
-          text-align: center;
-        }
-
-        .filters-container {
-          grid-template-columns: 1fr; /* Filtros em coluna no mobile */
-        }
-
-        .projects-grid {
-          grid-template-columns: 1fr; /* Projetos em coluna no mobile */
-        }
-
-        .form-container {
-          padding: 2rem; /* Menos padding no mobile */
-        }
+        .desktop-nav { display: none; }
+        .hamburger-btn { display: block; background: transparent; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+        .header-content { justify-content: space-between; }
+        .mobile-nav.active { display: block; position: absolute; top: 100%; left: 0; width: 100%; background-color: #002244; padding: 1rem 0; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); z-index: 1001;}
+        .filters-container, .projects-grid { grid-template-columns: 1fr; }
+        .form-container { padding: 2rem; }
       }
-
-      /* Ajustes menores para telas ainda menores (celulares) */
       @media (max-width: 480px) {
-        .logo {
-          font-size: 1.7rem;
-        }
-
-        .hero-banner {
-          padding: 4rem 2rem;
-        }
-
-        .hero-banner h1 {
-          font-size: 2.5rem;
-        }
-
-        .hero-banner p {
-          font-size: 1rem;
-        }
-
-        /* ADICIONE ESTE NOVO BLOCO */
-        .hero-banner .hero-content > div {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 1rem; /* <-- Esta linha adiciona o espaçamento! */
-        }
-
-        .hero-banner .hero-content .btn {
-          width: 90%; /* Faz os botões terem a mesma largura */
-          margin-left: 0 !important; /* Remove a margem que existia */
-        }
+        .logo { font-size: 1.7rem; }
+        .hero-banner { padding: 4rem 2rem; }
+        .hero-banner h1 { font-size: 2.5rem; }
+        .hero-banner p { font-size: 1rem; }
       }
 
-      /* --- Estilos para o Botão de Upload Personalizado --- */
-
-      /* Esconde o input de arquivo original */
-      .file-upload-wrapper input[type="file"] {
-        display: none;
-      }
-
-      /* Estiliza o nosso novo botão (que é um label) */
+      /* Estilos para o Botão de Upload Personalizado */
+      .file-upload-wrapper input[type="file"] { display: none; }
       .custom-file-upload {
-        display: inline-block;
-        background-color: #ff6600; /* Cor de destaque laranja */
-        color: white;
-        padding: 12px 20px;
-        border-radius: 8px;
-        border: none;
-        cursor: pointer;
-        font-weight: 600;
-        transition: background-color 0.3s ease;
+        display: inline-block; background-color: #003366; color: white;
+        padding: 12px 20px; border-radius: 8px; border: none;
+        cursor: pointer; font-weight: 600; transition: background-color 0.3s ease;
       }
-
-      .custom-file-upload:hover {
-        background-color: #e55a00; /* Laranja mais escuro no hover */
-      }
-      /* Ícone dentro do botão */
-      .custom-file-upload i {
-        margin-right: 8px;
-      }
-
-      /* Estiliza o texto que mostra o nome do arquivo */
-      #file-name {
-        margin-left: 15px;
-        font-style: italic;
-        color: #555;
-      }
-
-      /* --- Estilos para a Página Sobre Nós --- */
-
-      .manifesto p {
-        font-size: 1.1rem;
-        line-height: 1.7;
-        text-align: center;
-        max-width: 800px;
-        margin: 1rem auto;
-        color: #475569;
-      }
-
-      .equipe-grid {
-        display: flex;
-        justify-content: center;
-        gap: 2rem;
-        flex-wrap: wrap;
-        margin-top: 2rem;
-      }
-
-      .equipe-card {
-        background: white;
-        border-radius: 16px;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-        padding: 2rem;
-        text-align: center;
-        width: 280px;
-      }
-
-      .equipe-card img {
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
-        object-fit: cover;
-        margin-bottom: 1rem;
-        border: 4px solid #f0f4f8;
-      }
-
-      .equipe-card h4 {
-        font-size: 1.4rem;
-        color: #003366;
-        margin-bottom: 0.25rem;
-      }
-
-      .equipe-card .funcao {
-        color: #ff6600;
-        font-weight: 600;
-        margin-bottom: 1rem;
-      }
-
-      .equipe-card .bio {
-        font-style: italic;
-        color: #64748b;
-        margin-bottom: 1.5rem;
-      }
-
-      .social-links a {
-        color: #003366;
-        text-decoration: none;
-        font-size: 1.5rem;
-        margin: 0 0.5rem;
-        transition: color 0.3s;
-      }
-
-      .social-links a:hover {
-        color: #ff6600;
-      }
-
-      .call-to-action {
-        text-align: center;
-        margin-top: 4rem;
-        background-color: #f8fafc;
-        padding: 2.5rem;
-        border-radius: 16px;
-      }
-
-      .call-to-action h3 {
-        color: #003366;
-        font-size: 1.8rem;
-        margin-bottom: 1.5rem;
-      }
-
-      /* Remove o sublinhado e a cor padrão do link no logo */
-      .logo-link {
-        text-decoration: none;
-        color: white;
-      }
-      /* --- Estilos para o Modal de Detalhes --- */
+      .custom-file-upload:hover { background-color: #002244; }
+      .custom-file-upload i { margin-right: 8px; }
+      #file-name { margin-left: 15px; font-style: italic; color: #555; }
+        
+      /* ESTILOS PARA O MODAL DE DETALHES */
       .modal {
-        display: none;
-        position: fixed;
-        z-index: 2000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.6);
+        display: none; position: fixed; z-index: 2000;
+        left: 0; top: 0; width: 100%; height: 100%;
+        overflow: auto; background-color: rgba(0,0,0,0.6);
         animation: fadeIn 0.3s;
       }
       .modal-content {
-        background-color: #fff;
-        margin: 5% auto;
-        padding: 40px;
-        border-radius: 16px;
-        width: 80%;
-        max-width: 800px;
-        position: relative;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        background-color: #fff; margin: 5% auto; padding: 40px;
+        border-radius: 16px; width: 80%; max-width: 800px;
+        position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.2);
         animation: slideIn 0.4s ease-out;
       }
       .close-button {
-        color: #aaa;
-        position: absolute;
-        top: 15px;
-        right: 25px;
-        font-size: 28px;
-        font-weight: bold;
-        cursor: pointer;
+        color: #aaa; position: absolute; top: 15px; right: 25px;
+        font-size: 28px; font-weight: bold; cursor: pointer;
       }
-      .close-button:hover,
-      .close-button:focus {
-        color: #000;
-      }
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
-      }
-      @keyframes slideIn {
-        from {
-          transform: translateY(-50px);
-          opacity: 0;
-        }
-        to {
-          transform: translateY(0);
-          opacity: 1;
-        }
-      }
+      .close-button:hover, .close-button:focus { color: #000; }
+      @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+      @keyframes slideIn { from {transform: translateY(-50px); opacity: 0;} to {transform: translateY(0); opacity: 1;} }
 
-      .call-to-action .btn-primary,
-      .call-to-action .btn-secondary {
-        background-color: #f0f4f8; /* Um fundo cinza bem claro */
-        color: #003366; /* Cor do texto azul escuro */
-        border: 1px solid #d1d5db; /* Uma borda cinza clara */
-      }
+      /* Estilos para a Página Sobre Nós */
+      .manifesto p { font-size: 1.1rem; line-height: 1.7; text-align: center; max-width: 800px; margin: 1rem auto; color: #475569; }
+      .equipe-grid { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 2rem; }
+      .equipe-card { background: white; border-radius: 16px; box-shadow: 0 8px 30px rgba(0,0,0,0.08); padding: 2rem; text-align: center; width: 280px; }
+      .equipe-card img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-bottom: 1rem; border: 4px solid #f0f4f8; }
+      .equipe-card h4 { font-size: 1.4rem; color: #003366; margin-bottom: 0.25rem; }
+      .equipe-card .funcao { color: #FF6600; font-weight: 600; margin-bottom: 1rem; }
+      .equipe-card .bio { font-style: italic; color: #64748b; margin-bottom: 1.5rem; }
+      .social-links a { color: #003366; text-decoration: none; font-size: 1.5rem; margin: 0 0.5rem; transition: color 0.3s; }
+      .social-links a:hover { color: #FF6600; }
+      .call-to-action { text-align: center; margin-top: 4rem; background-color: #f8fafc; padding: 2.5rem; border-radius: 16px; }
+      .call-to-action h3 { color: #003366; font-size: 1.8rem; margin-bottom: 1.5rem; }
 
-      .call-to-action .btn-primary:hover {
-        background-color: #e2e8f0;
-        color: #003366;
-        border-color: #003366;
-      }
-
-      .call-to-action .btn-secondary:hover {
-        background-color: #e2e8f0;
-        color: #003366;
-        border-color: #003366;
-      }
     </style>
   </head>
   <body>
     <script>
-      const SUPABASE_URL = "https://fiaebgwsmijwpjpyhdba.supabase.co";
-      const SUPABASE_ANON_KEY =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpYWViZ3dzbWlqd3BqcHloZGJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5ODYxMzIsImV4cCI6MjA2NjU2MjEzMn0.dZbXp9_Gf6rRJLGoxTxx2r0mfTBMDCipyf7k2E0zNag";
-
-      const supabaseClient = supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_ANON_KEY
-      );
-
-      function abrirModalDetalhes(projectId) {
-        const projeto = projects.find((p) => p.id === projectId);
-        if (!projeto) return;
-
-        const modal = document.getElementById("projectModal");
-        const modalBody = document.getElementById("modalBody");
-
-        const midiaHtml = projeto.url_midia
-          ? projeto.url_midia.match(/\.(jpeg|jpg|gif|png)$/i)
-            ? `<img src="${projeto.url_midia}" alt="Capa do projeto" style="width:100%; border-radius: 8px; margin-bottom: 1rem;">`
-            : `<video controls style="width:100%; border-radius: 8px; margin-bottom: 1rem;"><source src="${projeto.url_midia}" type="video/mp4"></video>`
-          : "";
-
-        modalBody.innerHTML = `
-        ${midiaHtml}
-        <h2>${projeto.nome_projeto}</h2>
-        <p><strong>Turma:</strong> ${projeto.turma} | <strong>Ano:</strong> ${
-          projeto.ano
-        }</p>
-        <p><strong>Docente:</strong> ${projeto.docente}</p>
-        <p><strong>Integrantes:</strong> ${
-          projeto.integrantes ? projeto.integrantes.join(", ") : "N/A"
-        }</p>
-        <hr style="margin: 20px 0;">
-        <p>${projeto.descricao.replace(/\n/g, "<br>")}</p> 
-    `;
-
-        modal.style.display = "block";
-      }
-
-      function fecharModalDetalhes() {
-        const modal = document.getElementById("projectModal");
-        modal.style.display = "none";
-      }
+      const SUPABASE_URL = "SUA_URL_DO_SUPABASE";
+      const SUPABASE_ANON_KEY = "SUA_CHAVE_ANON_PUBLICA";
+      const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     </script>
+    
     <header>
       <div class="container">
         <div class="header-content">
           <a href="#" onclick="showSection('home')" class="logo-link">
-            <div class="logo">
-              <i class="fas fa-book-open"></i> Memória Viva
-            </div>
+            <div class="logo"><i class="fas fa-book-open"></i> Memória Viva</div>
           </a>
-
           <button class="hamburger-btn" onclick="toggleMobileMenu()">
             <i class="fas fa-bars"></i>
           </button>
-
           <nav class="desktop-nav">
             <ul>
-              <li>
-                <a onclick="showSection('home'); closeMobileMenu();">Início</a>
-              </li>
-              <li>
-                <a onclick="showSection('cadastro'); closeMobileMenu();"
-                  >Cadastrar Projeto</a
-                >
-              </li>
-              <li>
-                <a onclick="showSection('projetos'); closeMobileMenu();"
-                  >Consultar Projetos</a
-                >
-              </li>
-              <li>
-                <a onclick="showSection('sobre-nos'); closeMobileMenu();"
-                  >Sobre Nós</a
-                >
-              </li>
+              <li><a onclick="showSection('home'); closeMobileMenu();">Início</a></li>
+              <li><a onclick="showSection('cadastro'); closeMobileMenu();">Cadastrar Projeto</a></li>
+              <li><a onclick="showSection('projetos'); closeMobileMenu();">Consultar Projetos</a></li>
+              <li><a onclick="showSection('sobre-nos'); closeMobileMenu();">Sobre Nós</a></li>
             </ul>
           </nav>
         </div>
       </div>
       <nav class="mobile-nav">
         <ul>
-          <li>
-            <a onclick="showSection('home'); closeMobileMenu();">Início</a>
-          </li>
-          <li>
-            <a onclick="showSection('cadastro'); closeMobileMenu();"
-              >Cadastrar Projeto</a
-            >
-          </li>
-          <li>
-            <a onclick="showSection('projetos'); closeMobileMenu();"
-              >Consultar Projetos</a
-            >
-          </li>
-          <li>
-            <a onclick="showSection('sobre-nos'); closeMobileMenu();"
-              >Sobre Nós</a
-            >
-          </li>
+            <li><a onclick="showSection('home'); closeMobileMenu();">Início</a></li>
+            <li><a onclick="showSection('cadastro'); closeMobileMenu();">Cadastrar Projeto</a></li>
+            <li><a onclick="showSection('projetos'); closeMobileMenu();">Consultar Projetos</a></li>
+            <li><a onclick="showSection('sobre-nos'); closeMobileMenu();">Sobre Nós</a></li>
         </ul>
       </nav>
     </header>
 
     <main>
       <section id="home" class="section active">
-        <div class="container">
-          <div class="hero-banner">
-            <div class="hero-content">
-              <h1>O Próximo Capítulo do Seu Projeto Começa Aqui.</h1>
-              <p>
-                O lugar onde cada projeto é preservado para inspirar e ganhar
-                continuidade.
-              </p>
-              <div>
-                <a
-                  href="#"
-                  class="btn btn-primary"
-                  onclick="showSection('cadastro')"
-                  >Enviar meu Projeto</a
-                >
-                <a
-                  href="#"
-                  class="btn btn-secondary"
-                  onclick="showSection('projetos')"
-                  style="margin-left: 1rem"
-                  >Explorar Acervo</a
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+        </section>
 
       <section id="cadastro" class="section">
         <div class="container">
           <h2>Cadastrar Novo Projeto</h2>
           <div class="form-container">
-            <div class="success-message" id="successMessage">
-              Projeto cadastrado com sucesso!
-            </div>
+            <div class="success-message" id="successMessage">Projeto cadastrado com sucesso!</div>
             <form id="projectForm">
-              <div class="form-group">
-                <label>Imagem ou Vídeo de Capa (opcional)</label>
-                <div class="file-upload-wrapper">
-                  <label for="midiaProjeto" class="custom-file-upload">
-                    <i class="fas fa-cloud-upload-alt"></i> Escolher Arquivo
-                  </label>
-                  <span id="file-name">Nenhum arquivo selecionado</span>
-                  <input
-                    type="file"
-                    id="midiaProjeto"
-                    name="midiaProjeto"
-                    accept="image/*, video/*"
-                  />
-                </div>
-              </div>
-              <div class="form-group">
-                <label>Integrantes do Grupo *</label>
-                <div id="integrantesContainer" class="integrantes-list">
-                  <div class="integrante-item">
-                    <input
-                      type="text"
-                      name="integrantes[]"
-                      placeholder="Nome completo do integrante"
-                      required
-                    />
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  class="btn-add-integrante"
-                  onclick="addIntegrante()"
-                >
-                  + Adicionar Integrante
-                </button>
-              </div>
-              <div class="form-group">
-                <label for="nomeProjeto">Nome do Projeto *</label
-                ><input
-                  type="text"
-                  id="nomeProjeto"
-                  name="nomeProjeto"
-                  required
-                />
                 <div class="form-group">
-                  <label for="area">Área do Curso *</label>
-                  <select id="area" name="area" required>
-                    <option value="" disabled selected>
-                      Selecione uma área
-                    </option>
-                    <option value="Beleza e Estética">Beleza e Estética</option>
-                    <option value="Bem-estar">Bem-estar</option>
-                    <option value="Comunicação e Marketing">
-                      Comunicação e Marketing
-                    </option>
-                    <option value="Desenvolvimento Social">
-                      Desenvolvimento Social
-                    </option>
-                    <option value="Design, Artes e Arquitetura">
-                      Design, Artes e Arquitetura
-                    </option>
-                    <option value="Educação">Educação</option>
-                    <option value="Gastronomia e Alimentação">
-                      Gastronomia e Alimentação
-                    </option>
-                    <option value="Gestão e Negócios">Gestão e Negócios</option>
-                    <option value="Idiomas">Idiomas</option>
-                    <option
-                      value="Meio Ambiente, Segurança e Saúde no Trabalho"
-                    >
-                      Meio Ambiente, Segurança e Saúde no Trabalho
-                    </option>
-                    <option value="Moda">Moda</option>
-                    <option value="Saúde">Saúde</option>
-                    <option value="Tecnologia da Informação">
-                      Tecnologia da Informação
-                    </option>
-                    <option value="Turismo e Hospitalidade">
-                      Turismo e Hospitalidade
-                    </option>
-                  </select>
+                    <label for="nomeProjeto">Nome do Projeto *</label>
+                    <input type="text" id="nomeProjeto" name="nomeProjeto" required />
                 </div>
-              </div>
-              <div class="form-group">
-                <label for="turma">Nome da Turma *</label
-                ><input
-                  type="text"
-                  id="turma"
-                  name="turma"
-                  placeholder="Ex: Aprendizagem 187"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label for="docente">Nome do Docente *</label
-                ><input type="text" id="docente" name="docente" required />
-              </div>
-              <div class="form-group">
-                <label for="ano">Ano de Realização *</label
-                ><select id="ano" name="ano" required>
-                  <option value="">Selecione o ano</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="descricao">Descrição do Projeto *</label
-                ><textarea
-                  id="descricao"
-                  name="descricao"
-                  placeholder="Descreva o objetivo, metodologia e principais resultados do seu projeto..."
-                  required
-                ></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary" style="width: 100%">
-                Cadastrar Projeto
-              </button>
+
+                <div class="form-group">
+                    <label for="area">Área do Curso *</label>
+                    <select id="area" name="area" required>
+                        <option value="" disabled selected>Selecione uma área</option>
+                        <option value="Aprendizagem">Aprendizagem</option>
+                        <option value="Beleza e Estética">Beleza e Estética</option>
+                        <option value="Bem-estar">Bem-estar</option>
+                        <option value="Comunicação e Marketing">Comunicação e Marketing</option>
+                        <option value="Desenvolvimento Social">Desenvolvimento Social</option>
+                        <option value="Design, Artes e Arquitetura">Design, Artes e Arquitetura</option>
+                        <option value="Educação">Educação</option>
+                        <option value="Gastronomia e Alimentação">Gastronomia e Alimentação</option>
+                        <option value="Gestão e Negócios">Gestão e Negócios</option>
+                        <option value="Idiomas">Idiomas</option>
+                        <option value="Meio Ambiente, Segurança e Saúde no Trabalho">Meio Ambiente, Segurança e Saúde no Trabalho</option>
+                        <option value="Moda">Moda</option>
+                        <option value="Saúde">Saúde</option>
+                        <option value="Tecnologia da Informação">Tecnologia da Informação</option>
+                        <option value="Turismo e Hospitalidade">Turismo e Hospitalidade</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="modalidade">Modalidade do Curso *</label>
+                    <select id="modalidade" name="modalidade" required>
+                        <option value="" disabled selected>Selecione a modalidade</option>
+                        <option value="Especialização Técnica">Especialização Técnica</option>
+                        <option value="Técnico">Técnico</option>
+                        <option value="Livre">Livre</option>
+                        <option value="Graduação EAD">Graduação EAD</option>
+                        <option value="Pós-graduação EAD">Pós-graduação EAD</option>
+                        <option value="Jovem Aprendiz">Jovem Aprendiz</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="turma">Nome da Turma / Identificador *</label>
+                    <input type="text" id="turma" name="turma" placeholder="Ex: Téc. em ADS 2025.1" required />
+                </div>
+                
+                <div class="form-group-row">
+                    <div class="form-group">
+                        <label for="data_inicio">Data de Início *</label>
+                        <input type="date" id="data_inicio" name="data_inicio" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="data_termino">Data de Término</label>
+                        <input type="date" id="data_termino" name="data_termino">
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status *</label>
+                        <select id="status" name="status" required>
+                            <option value="Em andamento">Em andamento</option>
+                            <option value="Concluído">Concluído</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="docente">Nome do Docente Orientador *</label>
+                    <input type="text" id="docente" name="docente" required />
+                </div>
+                
+                <div class="form-group">
+                    <label>Integrantes do Grupo *</label>
+                    <div id="integrantesContainer" class="integrantes-list">
+                        <div class="integrante-item">
+                            <input type="text" name="integrantes[]" placeholder="Nome completo do integrante" required />
+                        </div>
+                    </div>
+                    <button type="button" class="btn-add-integrante" onclick="addIntegrante()">+ Adicionar Integrante</button>
+                </div>
+
+                <div class="form-group">
+                    <label for="descricao">Descrição do Projeto *</label>
+                    <textarea id="descricao" name="descricao" placeholder="Descreva o objetivo, metodologia e principais resultados do seu projeto..." required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="midiaProjeto">Imagem ou Vídeo de Capa (opcional)</label>
+                    <div class="file-upload-wrapper">
+                        <label for="midiaProjeto" class="custom-file-upload"><i class="fas fa-cloud-upload-alt"></i> Escolher Arquivo</label>
+                        <span id="file-name">Nenhum arquivo selecionado</span>
+                        <input type="file" id="midiaProjeto" name="midiaProjeto" accept="image/*, video/*" />
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Cadastrar Projeto</button>
             </form>
           </div>
         </div>
@@ -959,76 +550,48 @@
           <h2>Projetos Cadastrados</h2>
           <div class="filters-container">
             <div class="filter-item">
-              <label for="filterArea">Filtrar por Área:</label>
-              <select id="filterArea">
-                <option value="">Todas as áreas</option>
-                <option value="Beleza e Estética">Beleza e Estética</option>
-                <option value="Bem-estar">Bem-estar</option>
-                <option value="Comunicação e Marketing">
-                  Comunicação e Marketing
-                </option>
-                <option value="Desenvolvimento Social">
-                  Desenvolvimento Social
-                </option>
-                <option value="Design, Artes e Arquitetura">
-                  Design, Artes e Arquitetura
-                </option>
-                <option value="Educação">Educação</option>
-                <option value="Gastronomia e Alimentação">
-                  Gastronomia e Alimentação
-                </option>
-                <option value="Gestão e Negócios">Gestão e Negócios</option>
-                <option value="Idiomas">Idiomas</option>
-                <option value="Meio Ambiente, Segurança e Saúde no Trabalho">
-                  Meio Ambiente, Segurança e Saúde no Trabalho
-                </option>
-                <option value="Moda">Moda</option>
-                <option value="Saúde">Saúde</option>
-                <option value="Tecnologia da Informação">
-                  Tecnologia da Informação
-                </option>
-                <option value="Turismo e Hospitalidade">
-                  Turismo e Hospitalidade
-                </option>
-              </select>
+                <label for="filterModalidade">Filtrar por Modalidade:</label>
+                <select id="filterModalidade">
+                    <option value="">Todas</option>
+                    <option value="Especialização Técnica">Especialização Técnica</option>
+                    <option value="Técnico">Técnico</option>
+                    <option value="Livre">Livre</option>
+                    <option value="Graduação EAD">Graduação EAD</option>
+                    <option value="Pós-graduação EAD">Pós-graduação EAD</option>
+                    <option value="Jovem Aprendiz">Jovem Aprendiz</option>
+                </select>
             </div>
+            
             <div class="filter-item">
-              <label for="filterKeyword">Buscar por Palavra-Chave:</label
-              ><input
-                type="text"
-                id="filterKeyword"
-                placeholder="Nome do projeto, descrição..."
-              />
+                <label for="filterArea">Filtrar por Área:</label>
+                <select id="filterArea">
+                    <option value="">Todas as áreas</option>
+                    <option value="Aprendizagem">Aprendizagem</option>
+                    <option value="Beleza e Estética">Beleza e Estética</option>
+                    <option value="Bem-estar">Bem-estar</option>
+                    <option value="Comunicação e Marketing">Comunicação e Marketing</option>
+                    <option value="Desenvolvimento Social">Desenvolvimento Social</option>
+                    <option value="Design, Artes e Arquitetura">Design, Artes e Arquitetura</option>
+                    <option value="Educação">Educação</option>
+                    <option value="Gastronomia e Alimentação">Gastronomia e Alimentação</option>
+                    <option value="Gestão e Negócios">Gestão e Negócios</option>
+                    <option value="Idiomas">Idiomas</option>
+                    <option value="Meio Ambiente, Segurança e Saúde no Trabalho">Meio Ambiente, Segurança e Saúde no Trabalho</option>
+                    <option value="Moda">Moda</option>
+                    <option value="Saúde">Saúde</option>
+                    <option value="Tecnologia da Informação">Tecnologia da Informação</option>
+                    <option value="Turismo e Hospitalidade">Turismo e Hospitalidade</option>
+                </select>
             </div>
+            
             <div class="filter-item">
-              <label for="filterTurma">Buscar por Turma:</label
-              ><input
-                type="text"
-                id="filterTurma"
-                placeholder="Ex: Aprendizagem 187"
-              />
+              <label for="filterKeyword">Buscar por Palavra-Chave:</label>
+              <input type="text" id="filterKeyword" placeholder="Nome do projeto, descrição..." />
             </div>
+            
             <div class="filter-item">
-              <label for="filterAno">Filtrar por Ano:</label
-              ><select id="filterAno">
-                <option value="">Todos os anos</option>
-              </select>
-            </div>
-            <div class="filter-item">
-              <button class="btn btn-accent" onclick="applyFilters()">
-                Buscar</button
-              ><button
-                class="btn"
-                onclick="clearFilters()"
-                style="
-                  background: transparent;
-                  border: 1px solid #ccc;
-                  color: #333;
-                  margin-left: 5px;
-                "
-              >
-                Limpar
-              </button>
+              <label for="filterAno">Filtrar por Ano de Início:</label>
+              <select id="filterAno"><option value="">Todos os anos</option></select>
             </div>
           </div>
           <div id="projectsContainer" class="projects-grid"></div>
@@ -1037,103 +600,90 @@
 
       <section id="sobre-nos" class="section">
         <div class="container">
-          <h2>Nossa História: Da Ideia ao Impacto</h2>
+            <h2>Nossa História: Da Ideia ao Impacto</h2>
 
-          <div class="manifesto">
-            <p>
-              Todo projeto de conclusão de curso deixa um legado. O Memória Viva
-              garante que esse legado, especialmente o de impacto social, não
-              seja apenas uma memória. Nossa plataforma foi desenhada para
-              preservar cada Projeto Integrador, permitindo que o trabalho de
-              uma turma sirva de ponto de partida para a próxima. Conectamos
-              estudantes a benfeitorias que necessitam de apoio constante,
-              transformando o esforço acadêmico em um movimento que ganha força
-              a cada nova turma.
-            </p>
-          </div>
-
-          <h3
-            style="
-              text-align: center;
-              margin-top: 3rem;
-              margin-bottom: 2rem;
-              color: #003366;
-            "
-          >
-            Os Idealizadores
-          </h3>
-
-          <div class="equipe-grid">
-            <div class="equipe-card">
-              <img
-                src="https://felipemartins03.github.io/memoria_viva/Imagens/felipe_martins.jpeg"
-                alt="Foto do Felipe Martins"
-              />
-              <h4>Felipe Martins</h4>
-              <p class="funcao">Desenvolvedor & Idealizador</p>
-              <p class="bio">
-                "Acredito que a tecnologia pode ser a ponte para que boas ideias
-                nunca morram."
-              </p>
-              <div class="social-links">
-                <a
-                  href="https://www.linkedin.com/in/ifelipemartins/"
-                  target="_blank"
-                  ><i class="fab fa-linkedin"></i
-                ></a>
-                <a href="https://github.com/felipemartins03" target="_blank"
-                  ><i class="fab fa-github"></i
-                ></a>
-              </div>
+            <div class="manifesto">
+                <p>
+                    Todo projeto de conclusão de curso deixa um legado. O Memória Viva
+                    garante que esse legado, especialmente o de impacto social, não
+                    seja apenas uma memória. Nossa plataforma foi desenhada para
+                    preservar cada Projeto Integrador, permitindo que o trabalho de
+                    uma turma sirva de ponto de partida para a próxima. Conectamos
+                    estudantes a benfeitorias que necessitam de apoio constante,
+                    transformando o esforço acadêmico em um movimento que ganha força
+                    a cada nova turma.
+                </p>
             </div>
-          </div>
 
-          <div class="call-to-action">
-            <h3>Faça Parte Deste Legado</h3>
-            <div>
-              <a
-                href="#"
-                class="btn btn-primary"
-                onclick="showSection('projetos')"
-                >Continuar um Projeto</a
-              >
-              <a
-                href="#"
-                class="btn btn-secondary"
-                onclick="showSection('cadastro')"
-                style="margin-left: 1rem"
-                >Compartilhar Projeto</a
-              >
+            <h3 style="text-align: center; margin-top: 3rem; margin-bottom: 2rem; color: #003366;">Os Idealizadores</h3>
+            
+            <div class="equipe-grid">
+                <div class="equipe-card">
+                    <img src="https://felipemartins03.github.io/memoria_viva/Imagens/felipe_martins.jpeg" alt="Foto do Felipe Martins" />
+                    <h4>Felipe Martins</h4>
+                    <p class="funcao">Desenvolvedor & Idealizador</p>
+                    <p class="bio">"Acredito que a tecnologia pode ser a ponte para que boas ideias nunca morram."</p>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/ifelipemartins/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://github.com/felipemartins03" target="_blank"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+
+                <div class="equipe-card">
+                    <img src="https://www.amazon.com/Colega-Libro-Alumno-EJERCICIOS-Spanish/dp/8477116563" alt="Foto do Colega 1" />
+                    <h4>[NOME DO COLEGA 1]</h4>
+                    <p class="funcao">[FUNÇÃO DO COLEGA 1]</p>
+                    <p class="bio">"[FRASE DO COLEGA 1]"</p>
+                    <div class="social-links">
+                        <a href="[LINKEDIN DO COLEGA 1]" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+
+                <div class="equipe-card">
+                    <img src="https://es.scribd.com/document/474715849/Colega-2-Libro-1-pdf" alt="Foto do Colega 2" />
+                    <h4>[NOME DO COLEGA 2]</h4>
+                    <p class="funcao">[FUNÇÃO DO COLEGA 2]</p>
+                    <p class="bio">"[FRASE DO COLEGA 2]"</p>
+                    <div class="social-links">
+                        <a href="[LINKEDIN DO COLEGA 2]" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
             </div>
-          </div>
+
+            <div class="call-to-action">
+                <h3>Faça Parte Deste Legado</h3>
+                <div>
+                    <a href="#" class="btn" onclick="showSection('projetos')">Continuar um Projeto</a>
+                    <a href="#" class="btn" onclick="showSection('cadastro')" style="margin-left: 1rem;">Compartilhar Projeto</a>
+                </div>
+            </div>
         </div>
       </section>
     </main>
 
-    <footer
-      style="
-        background: #003366;
-        color: white;
-        text-align: center;
-        padding: 2rem 0;
-        margin-top: 3rem;
-      "
-    >
+    <footer style="background: #003366; color: white; text-align: center; padding: 2rem 0; margin-top: 3rem;">
       <div class="container">
-        <p>
-          &copy; 2025 Memória Viva. Onde cada projeto tem um próximo capítulo.
-        </p>
+        <p>&copy; 2025 Memória Viva. Onde cada projeto tem um próximo capítulo.</p>
       </div>
     </footer>
+
+    <div id="projectModal" class="modal">
+      <div class="modal-content">
+        <span class="close-button" onclick="fecharModalDetalhes()">&times;</span>
+        <div id="modalBody"></div>
+      </div>
+    </div>
 
     <script>
       let projects = [];
 
       function toggleMobileMenu() {
-        const mobileNav = document.querySelector(".mobile-nav");
-        mobileNav.classList.toggle("active");
+        document.querySelector(".mobile-nav").classList.toggle("active");
       }
-
+      function closeMobileMenu() {
+        document.querySelector(".mobile-nav").classList.remove("active");
+      }
+      
       async function fetchAndDisplayProjects() {
         const { data, error } = await supabaseClient
           .from("db_memoria_viva")
@@ -1149,107 +699,89 @@
         }
       }
 
-      document
-        .getElementById("projectForm")
-        .addEventListener("submit", async function (e) {
-          e.preventDefault();
-          const form = e.target;
-          const submitButton = form.querySelector('button[type="submit"]');
-          submitButton.disabled = true;
-          submitButton.textContent = "Enviando...";
+      document.getElementById("projectForm").addEventListener("submit", async function (e) {
+        e.preventDefault();
+        const form = e.target;
+        const submitButton = form.querySelector('button[type="submit"]');
+        submitButton.disabled = true;
+        submitButton.textContent = "Enviando...";
 
-          const midiaArquivo = form.querySelector("#midiaProjeto").files?.[0];
-          let urlDaMidia = null;
+        const midiaArquivo = form.querySelector("#midiaProjeto").files?.[0];
+        let urlDaMidia = null;
 
-          if (midiaArquivo) {
-            const nomeArquivo = `${Date.now()}_${midiaArquivo.name.replace(
-              /\s/g,
-              "_"
-            )}`;
+        if (midiaArquivo) {
+          const nomeArquivo = `${Date.now()}_${midiaArquivo.name.replace(/\s/g,"_")}`;
+          const { data: uploadData, error: uploadError } = await supabaseClient.storage
+            .from("midia-projetos")
+            .upload(nomeArquivo, midiaArquivo);
 
-            // CORREÇÃO AQUI: Usando o nome do bucket com hífen
-            const { data: uploadData, error: uploadError } =
-              await supabaseClient.storage
-                .from("midia-projetos")
-                .upload(nomeArquivo, midiaArquivo);
-
-            if (uploadError) {
-              console.error("Erro no upload da mídia:", uploadError);
-              // Mostra o erro específico retornado pelo Supabase
-              alert(`Erro no upload: ${uploadError.message}`);
-              submitButton.disabled = false;
-              submitButton.textContent = "Cadastrar Projeto";
-              return;
-            }
-
-            // CORREÇÃO AQUI TAMBÉM: Usando o nome do bucket com hífen
-            const { data: publicUrlData } = supabaseClient.storage
-              .from("midia-projetos")
-              .getPublicUrl(nomeArquivo);
-
-            urlDaMidia = publicUrlData.publicUrl;
-          }
-
-          const integrantesList = Array.from(
-            document.querySelectorAll('input[name="integrantes[]"]')
-          )
-            .map((input) => input.value.trim())
-            .filter(Boolean);
-          if (integrantesList.length === 0) {
-            alert("Adicione pelo menos um integrante.");
+          if (uploadError) {
+            console.error("Erro no upload da mídia:", uploadError);
+            alert(`Erro no upload: ${uploadError.message}`);
             submitButton.disabled = false;
             submitButton.textContent = "Cadastrar Projeto";
             return;
           }
+          const { data: publicUrlData } = supabaseClient.storage
+            .from("midia-projetos")
+            .getPublicUrl(nomeArquivo);
+          urlDaMidia = publicUrlData.publicUrl;
+        }
 
-          const formData = new FormData(form);
-          const projectData = {
+        const integrantesList = Array.from(document.querySelectorAll('input[name="integrantes[]"]'))
+            .map((input) => input.value.trim())
+            .filter(Boolean);
+
+        if (integrantesList.length === 0) {
+          alert("Adicione pelo menos um integrante.");
+          submitButton.disabled = false;
+          submitButton.textContent = "Cadastrar Projeto";
+          return;
+        }
+
+        const formData = new FormData(form);
+        const projectData = {
             integrantes: integrantesList,
             nome_projeto: formData.get("nomeProjeto"),
             area: formData.get("area"),
+            modalidade: formData.get("modalidade"),
+            data_inicio: formData.get("data_inicio"),
+            data_termino: formData.get("data_termino") || null,
+            status: formData.get("status"),
             turma: formData.get("turma"),
             docente: formData.get("docente"),
-            ano: formData.get("ano"),
+            ano: new Date(formData.get("data_inicio")).getFullYear(),
             descricao: formData.get("descricao"),
             url_midia: urlDaMidia,
-          };
+        };
 
-          const { error: insertError } = await supabaseClient
+        const { error: insertError } = await supabaseClient
             .from("db_memoria_viva")
             .insert([projectData]);
 
-          if (insertError) {
+        if (insertError) {
             console.error("Erro ao cadastrar projeto:", insertError);
             alert("Ocorreu um erro ao cadastrar o projeto. Tente novamente.");
             submitButton.disabled = false;
             submitButton.textContent = "Cadastrar Projeto";
-          } else {
+        } else {
             const successMessage = document.getElementById("successMessage");
             successMessage.style.display = "block";
             setTimeout(() => (successMessage.style.display = "none"), 4000);
-
             form.reset();
-            document.getElementById(
-              "integrantesContainer"
-            ).innerHTML = `<div class="integrante-item"><input type="text" name="integrantes[]" placeholder="Nome completo do integrante" required></div>`;
-            document.getElementById("file-name").textContent =
-              "Nenhum arquivo selecionado";
+            document.getElementById("integrantesContainer").innerHTML = `<div class="integrante-item"><input type="text" name="integrantes[]" placeholder="Nome completo do integrante" required></div>`;
+            document.getElementById("file-name").textContent = "Nenhum arquivo selecionado";
             submitButton.disabled = false;
             submitButton.textContent = "Cadastrar Projeto";
-
             await fetchAndDisplayProjects();
-          }
-        });
+        }
+      });
 
       document.addEventListener("DOMContentLoaded", function () {
         populateYearOptions();
         fetchAndDisplayProjects();
-
-        document
-          .getElementById("midiaProjeto")
-          .addEventListener("change", function () {
+        document.getElementById("midiaProjeto").addEventListener("change", function () {
             const fileNameSpan = document.getElementById("file-name");
-            // this.files[0] contém o arquivo selecionado
             if (this.files && this.files.length > 0) {
               fileNameSpan.textContent = this.files[0].name;
             } else {
@@ -1259,9 +791,7 @@
       });
 
       function showSection(sectionId) {
-        document
-          .querySelectorAll(".section")
-          .forEach((section) => section.classList.remove("active"));
+        document.querySelectorAll(".section").forEach((section) => section.classList.remove("active"));
         document.getElementById(sectionId).classList.add("active");
         window.scrollTo(0, 0);
         if (sectionId === "projetos") {
@@ -1270,11 +800,16 @@
       }
 
       function populateYearOptions() {
-        const currentYear = new Date().getFullYear();
-        const yearSelect = document.getElementById("ano");
-        for (let year = currentYear; year >= 2020; year--) {
-          yearSelect.innerHTML += `<option value="${year}">${year}</option>`;
-        }
+        const currentYear = new Date().getFullYear() + 1; // Allow future years
+        const startYear = 2015; // Go further back
+        const yearSelects = document.querySelectorAll('#filterAno');
+        yearSelects.forEach(select => {
+            let options = '<option value="">Todos os anos</option>';
+            for (let year = currentYear; year >= startYear; year--) {
+                options += `<option value="${year}">${year}</option>`;
+            }
+            select.innerHTML = options;
+        });
       }
 
       function addIntegrante() {
@@ -1287,118 +822,74 @@
 
       function populateFilterYears() {
         const filterAno = document.getElementById("filterAno");
-        const anos = [...new Set(projects.map((p) => p.ano))].sort(
-          (a, b) => b - a
-        );
-        const optionsHTML = anos
-          .map((ano) => `<option value="${ano}">${ano}</option>`)
-          .join("");
-        filterAno.innerHTML =
-          '<option value="">Todos os anos</option>' + optionsHTML;
+        const anos = [...new Set(projects.map((p) => p.ano))].sort((a, b) => b - a);
+        const optionsHTML = anos.map((ano) => `<option value="${ano}">${ano}</option>`).join("");
+        filterAno.innerHTML = '<option value="">Todos os anos</option>' + optionsHTML;
       }
+
       function displayProjects(projectsToDisplay = projects) {
         const container = document.getElementById("projectsContainer");
         if (!projectsToDisplay || projectsToDisplay.length === 0) {
           container.innerHTML = `<div class="empty-state"><h3>Nenhum projeto encontrado</h3><p>Seja o primeiro a cadastrar ou ajuste sua busca.</p></div>`;
           return;
         }
-        container.innerHTML = projectsToDisplay
-          .map((p) => {
-            const dataFormatada = new Date(p.created_at).toLocaleDateString(
-              "pt-BR"
-            );
-
-            const descricaoCurta =
-              p.descricao.length > 100
-                ? p.descricao.substring(0, 100) + "..."
-                : p.descricao;
-
-            let midiaHtml = "";
-
-            // Se o projeto tiver uma URL de mídia, exibe a mídia
+        container.innerHTML = projectsToDisplay.map((p) => {
+            const dataFormatada = new Date(p.created_at).toLocaleDateString("pt-BR", {timeZone: 'UTC'});
+            const descricaoCurta = p.descricao.length > 100 ? p.descricao.substring(0, 100) + "..." : p.descricao;
+            
+            let midiaHtml = '';
+            const placeholderSvg = `<div style="width:100%; aspect-ratio: 16/9; background-color: #f8f9fa; display: flex; align-items: center; justify-content: center; border-radius: 16px 16px 0 0; border-bottom: 1px solid #e9ecef;"><svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3Z" stroke="#cccccc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.5 10C9.32843 10 10 9.32843 10 8.5C10 7.67157 9.32843 7 8.5 7C7.67157 7 7 7.67157 7 8.5C7 9.32843 7.67157 10 8.5 10Z" stroke="#cccccc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 15L16 10L5 21" stroke="#cccccc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>`;
+            
             if (p.url_midia) {
-              const estiloMidia = `width:100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 16px 16px 0 0;`;
-
-              if (p.url_midia.match(/\.(jpeg|jpg|gif|png)$/i)) {
-                midiaHtml = `<img src="${p.url_midia}" alt="Capa do projeto ${p.nome_projeto}" style="${estiloMidia}">`;
-              } else if (p.url_midia.match(/\.(mp4|webm|ogg)$/i)) {
-                midiaHtml = `<video controls style="${estiloMidia}"><source src="${p.url_midia}" type="video/mp4"></video>`;
-              }
-            }
-            // SENÃO, exibe o ícone SVG padrão
-            else {
-              const placeholderSvg = `
-                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3Z" stroke="#cccccc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M8.5 10C9.32843 10 10 9.32843 10 8.5C10 7.67157 9.32843 7 8.5 7C7.67157 7 7 7.67157 7 8.5C7 9.32843 7.67157 10 8.5 10Z" stroke="#cccccc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M21 15L16 10L5 21" stroke="#cccccc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>`;
-
-              midiaHtml = `<div style="width:100%; aspect-ratio: 16/9; background-color: #f8f9fa; display: flex; align-items: center; justify-content: center; border-radius: 16px 16px 0 0; border-bottom: 1px solid #e9ecef;">
-                            ${placeholderSvg}
-                         </div>`;
+                const estiloMidia = `width:100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 16px 16px 0 0;`;
+                if (p.url_midia.match(/\.(jpeg|jpg|gif|png)$/i)) {
+                    midiaHtml = `<img src="${p.url_midia}" alt="Capa do projeto" style="${estiloMidia}">`;
+                } else if (p.url_midia.match(/\.(mp4|webm|ogg)$/i)) {
+                    midiaHtml = `<video controls style="${estiloMidia}"><source src="${p.url_midia}" type="video/mp4"></video>`;
+                } else {
+                    midiaHtml = placeholderSvg;
+                }
+            } else {
+                midiaHtml = placeholderSvg;
             }
 
-            // A estrutura do card foi ajustada para a imagem ocupar todo o topo
-            const cardPadding = "padding: 1.5rem;";
-            const cardFooterPadding = "padding: 0 1.5rem 1.5rem;";
+            const statusCor = p.status === 'Concluído' ? '#28a745' : '#fd7e14';
 
             return `
             <div class="project-card" onclick="abrirModalDetalhes(${p.id})">
                 ${midiaHtml}
-                <div class="card-content" style="${
-                  midiaHtml ? cardPadding : ""
-                }">
+                <div class="card-content">
                     <h3>${p.nome_projeto}</h3>
-<div class="project-meta">
-    <span class="project-tag" style="background-color: #007bff;">${
-      p.area
-    }</span> 
-    <span class="project-tag">${p.turma}</span>
-    <span class="project-tag">${p.ano}</span>
-</div>
+                    <div class="project-meta">
+                        <span class="project-tag" style="background-color: ${statusCor};">${p.status}</span>
+                        <span class="project-tag" style="background-color: #007bff;">${p.area}</span>
+                        <span class="project-tag">${p.modalidade}</span>
+                    </div>
                     <div class="project-details">
-                        <p><strong>Integrantes:</strong> ${
-                          p.integrantes ? p.integrantes.join(", ") : "N/A"
-                        }</p>
+                        <p><strong>Turma:</strong> ${p.turma}</p>
                         <p>${descricaoCurta}</p>
                     </div>
                 </div>
-                <footer style="${
-                  midiaHtml
-                    ? cardFooterPadding
-                    : `padding: 0; margin-top: auto; border-top: 1px solid #eee; padding-top: 1rem;`
-                }">Ver mais detalhes</footer>
+                <footer">Ver mais detalhes</footer>
             </div>`;
-          })
-          .join("");
+        }).join("");
       }
 
       function applyFilters() {
-        const keyword = document
-          .getElementById("filterKeyword")
-          .value.toLowerCase()
-          .trim();
-        const turma = document
-          .getElementById("filterTurma")
-          .value.toLowerCase()
-          .trim();
+        const keyword = document.getElementById("filterKeyword").value.toLowerCase().trim();
+        const turma = document.getElementById("filterTurma").value.toLowerCase().trim();
         const ano = document.getElementById("filterAno").value;
-        const area = document.getElementById("filterArea").value; // <-- PEGA O VALOR DA ÁREA
+        const area = document.getElementById("filterArea").value;
+        const modalidade = document.getElementById("filterModalidade").value;
 
         const filtered = projects.filter((p) => {
-          const searchString = `${p.nome_projeto} ${p.descricao} ${(
-            p.integrantes || []
-          ).join(" ")} ${p.docente}`.toLowerCase();
-
+          const searchString = `${p.nome_projeto} ${p.descricao} ${(p.integrantes || []).join(" ")} ${p.docente}`.toLowerCase();
           const keywordMatch = keyword ? searchString.includes(keyword) : true;
-          const turmaMatch = turma
-            ? p.turma.toLowerCase().includes(turma)
-            : true;
+          const turmaMatch = turma ? p.turma.toLowerCase().includes(turma) : true;
           const anoMatch = ano ? String(p.ano) === ano : true;
-          const areaMatch = area ? p.area === area : true; // <-- LÓGICA DO FILTRO DE ÁREA
-
-          return keywordMatch && turmaMatch && anoMatch && areaMatch; // <-- INCLUI A VERIFICAÇÃO
+          const areaMatch = area ? p.area === area : true;
+          const modalidadeMatch = modalidade ? p.modalidade === modalidade : true;
+          return keywordMatch && turmaMatch && anoMatch && areaMatch && modalidadeMatch;
         });
         displayProjects(filtered);
       }
@@ -1407,16 +898,50 @@
         document.getElementById("filterKeyword").value = "";
         document.getElementById("filterTurma").value = "";
         document.getElementById("filterAno").value = "";
+        document.getElementById("filterArea").value = "";
+        document.getElementById("filterModalidade").value = "";
         displayProjects(projects);
       }
+      
+      function abrirModalDetalhes(projectId) {
+        const projeto = projects.find(p => p.id === projectId);
+        if (!projeto) return;
+
+        const modal = document.getElementById('projectModal');
+        const modalBody = document.getElementById('modalBody');
+
+        const inicioFmt = new Date(projeto.data_inicio).toLocaleDateString('pt-BR', { timeZone: 'UTC' });
+        const terminoFmt = projeto.data_termino ? new Date(projeto.data_termino).toLocaleDateString('pt-BR', { timeZone: 'UTC' }) : 'Presente';
+        const statusCor = projeto.status === 'Concluído' ? '#28a745' : '#fd7e14';
+
+        let midiaHtml = '';
+        if (projeto.url_midia) {
+            if (projeto.url_midia.match(/\.(jpeg|jpg|gif|png)$/i)) {
+                midiaHtml = `<img src="${projeto.url_midia}" alt="Capa" style="width:100%; border-radius: 8px; margin-bottom: 1rem;">`;
+            } else if (projeto.url_midia.match(/\.(mp4|webm|ogg)$/i)) {
+                midiaHtml = `<video controls style="width:100%; border-radius: 8px; margin-bottom: 1rem;"><source src="${projeto.url_midia}" type="video/mp4"></video>`;
+            }
+        }
+
+        modalBody.innerHTML = `
+            ${midiaHtml}
+            <span class="project-tag" style="background-color: ${statusCor}; font-size: 1rem; margin-bottom: 1rem; display: inline-block;">${projeto.status}</span>
+            <h2>${projeto.nome_projeto}</h2>
+            <p><strong>Área:</strong> ${projeto.area} | <strong>Modalidade:</strong> ${projeto.modalidade}</p>
+            <p><strong>Período:</strong> ${inicioFmt} a ${terminoFmt}</p>
+            <p><strong>Turma:</strong> ${projeto.turma}</p>
+            <p><strong>Docente:</strong> ${projeto.docente}</p>
+            <p><strong>Integrantes:</strong> ${projeto.integrantes ? projeto.integrantes.join(', ') : 'N/A'}</p>
+            <hr style="margin: 20px 0;">
+            <p>${projeto.descricao.replace(/\n/g, '<br>')}</p> 
+        `;
+
+        modal.style.display = "block";
+      }
+
+      function fecharModalDetalhes() {
+        document.getElementById('projectModal').style.display = "none";
+      }
     </script>
-    <div id="projectModal" class="modal">
-      <div class="modal-content">
-        <span class="close-button" onclick="fecharModalDetalhes()"
-          >&times;</span
-        >
-        <div id="modalBody"></div>
-      </div>
-    </div>
   </body>
 </html>
