@@ -702,36 +702,35 @@
         SUPABASE_ANON_KEY
       );
 
-      function abrirModalDetalhes(projectId) {
-        const projeto = projects.find((p) => p.id === projectId);
-        if (!projeto) return;
+     function abrirModalDetalhes(projectId) {
+    const projeto = projects.find((p) => p.id === projectId);
+    if (!projeto) return;
 
-        const modal = document.getElementById("projectModal");
-        const modalBody = document.getElementById("modalBody");
+    const modal = document.getElementById("projectModal");
+    const modalBody = document.getElementById("modalBody");
 
-        const midiaHtml = projeto.url_midia
-          ? projeto.url_midia.match(/\.(jpeg|jpg|gif|png)$/i)
-            ? `<img src="${projeto.url_midia}" alt="Capa do projeto" style="width:100%; border-radius: 8px; margin-bottom: 1rem;">`
-            : `<video controls style="width:100%; border-radius: 8px; margin-bottom: 1rem;"><source src="${projeto.url_midia}" type="video/mp4"></video>`
-          : "";
+    const midiaHtml = projeto.url_midia
+      ? projeto.url_midia.match(/\.(jpeg|jpg|gif|png)$/i)
+        ? `<img src="${projeto.url_midia}" alt="Capa do projeto" style="width:100%; border-radius: 8px; margin-bottom: 1rem;">`
+        : `<video controls style="width:100%; border-radius: 8px; margin-bottom: 1rem;"><source src="${projeto.url_midia}" type="video/mp4"></video>`
+      : "";
+    
+    // Lógica da cor para o status
+    const statusCor = projeto.status === 'Concluído' ? '#28a745' : '#fd7e14';
 
-        modalBody.innerHTML = `
-        ${midiaHtml}
-        <h2>${projeto.nome_projeto}</h2>
-        <p><strong>Turma:</strong> ${projeto.turma} | <strong>Ano:</strong> ${
-          projeto.ano
-        }</p>
-        <p><strong>Docente:</strong> ${projeto.docente}</p>
-        <p><strong>Integrantes:</strong> ${
-          projeto.integrantes ? projeto.integrantes.join(", ") : "N/A"
-        }</p>
-        <hr style="margin: 20px 0;">
-        <p>${projeto.descricao.replace(/\n/g, "<br>")}</p> 
+    modalBody.innerHTML = `
+      ${midiaHtml}
+      <span class="project-tag" style="background-color: ${statusCor}; font-size: 1rem; margin-bottom: 1rem; display: inline-block;">${projeto.status}</span>
+      <h2>${projeto.nome_projeto}</h2>
+      <p><strong>Turma:</strong> ${projeto.turma} | <strong>Ano:</strong> ${projeto.ano}</p>
+      <p><strong>Docente:</strong> ${projeto.docente}</p>
+      <p><strong>Integrantes:</strong> ${projeto.integrantes ? projeto.integrantes.join(", ") : "N/A"}</p>
+      <hr style="margin: 20px 0;">
+      <p>${projeto.descricao.replace(/\n/g, "<br>")}</p> 
     `;
 
-        modal.style.display = "block";
-      }
-
+    modal.style.display = "block";
+}
       function fecharModalDetalhes() {
         const modal = document.getElementById("projectModal");
         modal.style.display = "none";
@@ -937,6 +936,13 @@
                 ><select id="ano" name="ano" required>
                   <option value="">Selecione o ano</option>
                 </select>
+                <div class="form-group">
+    <label for="status">Status do Projeto *</label>
+    <select id="status" name="status" required>
+        <option value="Em andamento">Em andamento</option>
+        <option value="Concluído">Concluído</option>
+    </select>
+</div>
               </div>
               <div class="form-group">
                 <label for="descricao">Descrição do Projeto *</label
@@ -1223,6 +1229,7 @@
             turma: formData.get("turma"),
             docente: formData.get("docente"),
             ano: formData.get("ano"),
+            status: formData.get("status"),
             descricao: formData.get("descricao"),
             url_midia: urlDaMidia,
           };
@@ -1355,6 +1362,8 @@
             // A estrutura do card foi ajustada para a imagem ocupar todo o topo
             const cardPadding = "padding: 1.5rem;";
             const cardFooterPadding = "padding: 0 1.5rem 1.5rem;";
+
+            const statusCor = p.status === 'Concluído' ? '#28a745' : '#fd7e14'; // Verde para concluído, laranja para em andamento
 
             return `
             <div class="project-card" onclick="abrirModalDetalhes(${p.id})">
